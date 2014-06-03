@@ -6,5 +6,5 @@ color sidebar_new color221 color233
 # bindings
 bind index \Cn     sidebar-next
 bind index \Ce     sidebar-prev
-bind index \Cl     sidebar-open
+bind index \Co     sidebar-open
 
