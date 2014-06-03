@@ -1,0 +1,7 @@
+mutt/cache
+mutt/mailboxes
+
+xmonad/*.o
+xmonad/*.hi
+xmonad/*.errors
+xmonad/xmonad-*-linux
