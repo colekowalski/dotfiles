@@ -1,0 +1,6 @@
+text/html; elinks -dump; copiousoutput
+application/pdf; okular %s &
+image/jpeg; feh --borderless --auto-zoom %s
+image/jpg; feh --borderless --auto-zoom %s
+image/gif; feh --borderless --auto-zoom %s
+image/png; feh --borderless --auto-zoom %s

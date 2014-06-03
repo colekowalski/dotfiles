@@ -1,0 +1,3 @@
+set from  = "cole@northernbloc.org"
+set record = "+northernbloc/Sent"
+set sendmail = "/usr/bin/msmtp -a northernbloc"

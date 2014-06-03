@@ -1,0 +1,13 @@
+ignore *
+
+unignore From:
+unignore To:
+unignore Reply-To:
+unignore Mail-Followup-To:
+unignore Subject:
+unignore Date
+unignore CC:
+unignore BCC:
+unignore User-Agent:
+
+hdr_order From: To: CC: BCC: Subject: Date:

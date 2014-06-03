@@ -1,0 +1,59 @@
+! -- xft settings -- !
+Xft.dpi: 96
+Xft.rgba: rgb
+Xft.hinting: true
+Xft.autohint: false
+Xft.hintstyle: hintslight
+Xft.lcdfilter: lcddefault
+Xft.antialias: true
+Xft.embolden: false
+Xft.render: true
+
+! -- urxvt settings -- !
+URxvt*.transparent: false
+URxvt.scrollBar: false
+
+URxvt*depth: 32
+URxvt*dynamicColors: on
+!URxvt*background: [90]#202020
+!URxvt.foreground: white
+!URxvt.background: black
+
+URxvt*font: xft:Ubuntu Mono:regular:pixelsize=15
+URxvt*imFont: xft:Ubuntu Mono:italic:pixelsize=15
+URxvt*boldFont: xft:Ubuntu Mono:bold:pixelsize=15
+URxvt*letterSpace:                    -1*/
+
+! -- urxvt colors --!
+URxvt*cursorColor:      #d0d0d0
+URxvt*colorIT:          #c37561
+URxvt*colorUL:          #a0a57e
+!Background / Foreground
+URxvt*background: #202020
+URxvt*foreground: #ddccbb
+!Black / Light black
+URxvt*color0: #222222
+URxvt*color8: #666666
+!Red / Light red
+URxvt*color1:  #cc4747
+URxvt*color9:  #bf5858
+!Green / Light green
+URxvt*color2:  #a0cf5d
+URxvt*color10: #b8d68c
+!Yellow / Light yellow
+URxvt*color3:  #e0a524
+URxvt*color11: #edB85c
+!Blue / Light blue
+URxvt*color4:  #4194d9
+URxvt*color12: #60aae6
+!Purple / Light purple
+URxvt*color5:  #cc2f6e
+URxvt*color13: #db588c
+!Cyan / Light cyan
+URxvt*color6:  #6d878d
+URxvt*color14:  #42717b
+!White / Light white...?
+URxvt*color7:  #dedede
+URxvt*color15: #f2f2f2
+
+dzen2.font: xft:Ubuntu Mono:regular:pixelsize=12
