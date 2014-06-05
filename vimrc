@@ -66,6 +66,10 @@ set laststatus=2
 
 " ctrl-p
 map <leader>f :CtrlP<cr>
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/]\.(git|hg|svn)$|/target/|/project/target/|/project/project/',
+  \ 'file': '\v\.%(class|o|png|jpg|jpeg|bmp|jar)$',
+  \ }
 
 " NERDTree stuff...
 "autocmd vimenter * NERDTree     "auto start nerdtree
