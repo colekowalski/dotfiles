@@ -10,7 +10,7 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'derekwyatt/vim-scala'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'bling/vim-airline'
-Plugin 'altercation/vim-colors-solarized'
+Plugin 'tomasr/molokai'
 Plugin 'kien/ctrlp.vim'
 Plugin 'fatih/vim-go'
 
@@ -20,9 +20,7 @@ filetype plugin indent on
 set t_Co=256
 set background=dark
 let g:rehash256=1
-let g:solarized_termcolors=256
-let g:solarized_termtrans=1
-colorscheme solarized
+colorscheme molokai
 syntax on
 
 let mapleader = ","
