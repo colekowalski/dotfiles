@@ -62,6 +62,7 @@ newKeys x = myKeys x `M.union` keys defaultConfig x
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList
   [ ((modm, xK_p),    spawn "pidgin")
   , ((modm, xK_c),    spawn "chromium")
+  , ((modm, xK_f),    spawn "firefox")
   , ((modm, xK_m),    spawn "vlc")
   , ((modm, xK_o),    spawn "okular")
   , ((modm, xK_Return), spawn "gnome-terminal")
