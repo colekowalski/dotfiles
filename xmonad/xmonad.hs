@@ -1,6 +1,7 @@
 import XMonad
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.DynamicLog
+import XMonad.Hooks.SetWMName
 import XMonad.Layout.IM
 import XMonad.Layout.Grid
 import XMonad.Layout.PerWorkspace (onWorkspace)
@@ -41,6 +42,7 @@ main = do
     , borderWidth = 1
     , normalBorderColor = "#000000"
     , focusedBorderColor = "#535d6c"
+    , startupHook = setWMName "LG3D"
     }
 
 myWorkspaces = ["1:mail", "2:im", "3:web"] ++ map show [4..9]
