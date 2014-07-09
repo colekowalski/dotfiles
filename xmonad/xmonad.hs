@@ -48,6 +48,7 @@ myWorkspaces = ["1:mail", "2:im", "3:web"] ++ map show [4..9]
 myManageHook = composeAll
   [ (className =? "Pidgin"     --> doShift "2:im")
   , (className =? "Chromium"   --> doShift "3:web")
+  , (className =? "Firefox"   --> doShift "3:web")
   , (className =? "VirtualBox" --> doFloat)
   , (className =? "qemu-system-x86_64" --> doFloat)
   , (className =? "Vlc"        --> doFloat)
