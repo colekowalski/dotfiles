@@ -13,6 +13,8 @@ Plugin 'bling/vim-airline'
 Plugin 'tomasr/molokai'
 Plugin 'kien/ctrlp.vim'
 Plugin 'fatih/vim-go'
+Plugin 'rodjek/vim-puppet'
+Plugin 'scrooloose/syntastic.git'
 
 call vundle#end()
 filetype plugin indent on
