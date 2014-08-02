@@ -1,5 +1,5 @@
 [general]
-accounts = northernbloc
+accounts = northernbloc, disqus
 #ui = quiet
 ui = ttyui
 maxsyncaccounts = 2
@@ -21,6 +21,25 @@ remoteuser = cole@northernbloc.org
 maxconnections = 1
 ssl = yes
 cert_fingerprint = 72be7e78f3e6e0643037d0c86747cf4b5cd76457
+
+[Account disqus]
+localrepository = disqus_local
+remoterepository = disqus_remote
+status_backend = sqlite
+autorefresh = 1
+
+[Repository disqus_local]
+type = Maildir
+localfolders = ~/.mail/disqus
+
+[Repository disqus_remote]
+type = IMAP
+remotehost = imap.gmail.com
+remoteuser = cole@disqus.com
+maxconnections = 1
+ssl = yes
+sslcacertfile = /etc/ssl/certs/ca-certificates.crt
+folderfilter = lambda foldername: foldername not in set(['[Gmail]/All Mail', '[Gmail]/Trash'])
 
 [mbnames]
 enabled = Yes
