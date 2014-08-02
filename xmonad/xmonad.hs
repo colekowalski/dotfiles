@@ -11,9 +11,9 @@ import System.IO (hPutStrLn)
 
 import qualified Data.Map as M
 
-myDzenBar = "dzen2 -ta 'l' -w '840' -h 20 -fg '#ffffff' -bg '#1b1d1e'"
-myConkyBar = "conky -c /home/cole/.xmonad/conky_dzen.conf | dzen2 -x '840' -w '740' -h 20 -ta 'r' -fg '#ffffff' -bg '#1b1d1e'"
-myTrayer = "trayer --edge top --align right --SetDockType true --SetPartialStrut true --expand true --transparent true --tint 0x222222 --alpha 0 --height 20 --width 100 --widthtype pixel"
+myDzenBar = "dzen2 -ta 'l' -xs 1 -w '840' -h 20 -fg '#ffffff' -bg '#1b1d1e'"
+myConkyBar = "conky -c /home/cole/.xmonad/conky_dzen.conf | dzen2 -x '840' -w '740' -h 20 -ta 'r' -xs 1 -fg '#ffffff' -bg '#1b1d1e'"
+myTrayer = "trayer --edge top --align right --SetDockType true --SetPartialStrut true --expand true --transparent true --tint 0x222222 --alpha 0 --height 20 --width 100 --widthtype pixel --monitor primary"
 
 myDzenPP  = dzenPP
   { ppCurrent = dzenColor "#3399ff" "" . wrap " " " "
