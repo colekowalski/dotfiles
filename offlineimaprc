@@ -1,27 +1,8 @@
 [general]
-accounts = grooveshark,northernbloc
+accounts = northernbloc
 #ui = quiet
 ui = ttyui
 maxsyncaccounts = 2
-
-[Account grooveshark]
-localrepository = grooveshark_local
-remoterepository = grooveshark_remote
-status_backend = sqlite
-autorefresh = 1
-
-[Repository grooveshark_local]
-type = Maildir
-localfolders = ~/.mail/grooveshark
-
-[Repository grooveshark_remote]
-type = IMAP
-remotehost = mail1.escapemg.com
-remoteuser = cole.kowalski
-maxconnections = 1
-ssl = yes
-cert_fingerprint = 49391afd4460f273bff0ce45a84309a76baf44cd
-folderfilter = lambda foldername: not re.search('(Trash|Alerts|Contacts|Deleted Messages)', foldername)
 
 [Account northernbloc]
 localrepository = northernbloc_local
