@@ -21,3 +21,6 @@
 
 [push]
   default = tracking
+
+[include]
+  path = ~/.gitconfig_private
