@@ -1,6 +1,6 @@
 [user]
-	name = Cole Kowalski
-	email = cole@northernbloc.org
+  name = Cole Kowalski
+  email = cole@northernbloc.org
 
 [alias]
   ar = archive --format=tar
@@ -11,13 +11,13 @@
   ci = commit
 
 [color]
-	branch = auto
+  branch = auto
   diff = auto
   interactive = auto
   status = auto
 
 [core]
-	excludesfile = /Users/cole/.gitignore_global
+  excludesfile = ~/.gitignore_global
 
 [push]
   default = tracking
