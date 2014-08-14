@@ -39,6 +39,6 @@ source ~/.mutt/conf/solarized.muttrc
 source ~/.mutt/conf/sidebar.muttrc
 source ~/.mutt/mailboxes
 
-folder-hook grooveshark/* source ~/.mutt/accounts/cole.grooveshark.com
+folder-hook disqus/* source ~/.mutt/accounts/cole.disqus.com
 folder-hook northernbloc/* source ~/.mutt/accounts/cole.northernbloc.org
 
