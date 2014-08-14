@@ -1,0 +1,8 @@
+*.elc
+#.*#
+*~
+projectile-bookmarks.eld
+
+var/
+auto-save-list/
+elpa/
