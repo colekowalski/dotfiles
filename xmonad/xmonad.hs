@@ -61,6 +61,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList
   , ((modm, xK_m),    spawn "vlc")
   , ((modm, xK_o),    spawn "okular")
   , ((modm, xK_Return), spawn "gnome-terminal")
+  , ((modm .|. shiftMask, xK_e), spawn "emacsclient -c -n")
   , ((0, 0x1008ff13), spawn "amixer -q set Master 2+")
   , ((0, 0x1008ff11), spawn "amixer -q set Master 2-")
   , ((0, 0x1008ff12), spawn "amixer -q set Master toggle")
