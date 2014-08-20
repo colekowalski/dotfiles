@@ -2,9 +2,6 @@ import XMonad
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.SetWMName
-import XMonad.Layout.IM
-import XMonad.Layout.Grid
-import XMonad.Layout.PerWorkspace (onWorkspace)
 import XMonad.Layout.NoBorders (smartBorders)
 import XMonad.Util.Run (spawnPipe)
 import System.IO (hPutStrLn)
@@ -38,7 +35,7 @@ main = do
     , workspaces = myWorkspaces
     , logHook = myLogHook dzenLeftBar
     , manageHook = manageDocks <+> myManageHook <+> manageHook defaultConfig
-    , layoutHook = avoidStruts $ pidginLayoutHook $ smartBorders $ layoutHook defaultConfig
+    , layoutHook = avoidStruts $ smartBorders $ layoutHook defaultConfig
     , borderWidth = 1
     , normalBorderColor = "#000000"
     , focusedBorderColor = "#535d6c"
@@ -55,11 +52,6 @@ myManageHook = composeAll
   , (className =? "qemu-system-x86_64" --> doFloat)
   , (className =? "Vlc"        --> doFloat)
   ]
-
-pidginLayoutHook = onWorkspace "2:im" pidginLayout  
-  where
-    gridLayout = Grid
-    pidginLayout = withIM (15/100) (Role "buddy_list") gridLayout
 
 newKeys x = myKeys x `M.union` keys defaultConfig x
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList
