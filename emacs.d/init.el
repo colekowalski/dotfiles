@@ -24,6 +24,5 @@
 ;; load in modules
 (require 'init-ido)
 (require 'init-org)
-(require 'init-evil)
 (require 'init-mail)
 (require 'init-projectile)

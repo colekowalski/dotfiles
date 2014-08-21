@@ -2,7 +2,7 @@
 
 (package-initialize)
 
-(defvar package-list '(coffee-mode evil gist go-mode magit projectile puppet-mode scala-mode2))
+(defvar package-list '(coffee-mode gist go-mode magit projectile puppet-mode scala-mode2))
 
 ;; list of servers to grab packages from
 (setq package-archives
