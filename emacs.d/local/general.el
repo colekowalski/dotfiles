@@ -22,6 +22,9 @@
 (setq-default show-trailing-whitespace t)
 (setq-default require-final-newline t)
 
+;; disable line wrapping
+(setq-default truncatl-lines t)
+
 ;; show column numbers
 (column-number-mode t)
 
