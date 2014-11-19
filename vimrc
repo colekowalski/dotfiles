@@ -8,7 +8,6 @@ call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'derekwyatt/vim-scala'
-Plugin 'airblade/vim-gitgutter'
 Plugin 'bling/vim-airline'
 Plugin 'tomasr/molokai'
 Plugin 'kien/ctrlp.vim'
