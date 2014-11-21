@@ -71,8 +71,8 @@ let g:ctrlp_custom_ignore = {
   \ }
 
 " NERDTree stuff...
-"autocmd vimenter * NERDTree     "auto start nerdtree
 map <leader>t :NERDTreeToggle<cr>
-autocmd vimenter * wincmd p     "start vim in non-nerdtree buffer
+let NERDTreeQuitOnOpen = 1      " close nerdtree after opening a file
+autocmd vimenter * wincmd p     " start vim in non-nerdtree buffer
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
