@@ -9,11 +9,11 @@ Plugin 'gmarik/Vundle.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'derekwyatt/vim-scala'
 Plugin 'bling/vim-airline'
-Plugin 'tomasr/molokai'
 Plugin 'kien/ctrlp.vim'
 Plugin 'fatih/vim-go'
 Plugin 'rodjek/vim-puppet'
 Plugin 'scrooloose/syntastic.git'
+Plugin 'altercation/vim-colors-solarized.git'
 
 call vundle#end()
 filetype plugin indent on
@@ -21,7 +21,7 @@ filetype plugin indent on
 set t_Co=256
 set background=dark
 let g:rehash256=1
-colorscheme molokai
+colorscheme solarized
 syntax on
 
 let mapleader = ","
@@ -51,6 +51,7 @@ set noswapfile      " don't have much of a need for these
 
 " airline
 let g:airline_powerline_fonts=1
+let g:airline_theme='solarized'
 set laststatus=2
 
 " ctrl-p
