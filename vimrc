@@ -5,17 +5,17 @@ filetype off
 set rtp+=~/.vim/bundle/Vundle.vim/
 call vundle#begin()
 
-Plugin 'gmarik/Vundle.vim'
-Plugin 'scrooloose/nerdtree'
-Plugin 'derekwyatt/vim-scala'
-Plugin 'bling/vim-airline'
-Plugin 'kien/ctrlp.vim'
-Plugin 'fatih/vim-go'
-Plugin 'rodjek/vim-puppet'
-Plugin 'scrooloose/syntastic.git'
 Plugin 'altercation/vim-colors-solarized.git'
-Plugin 'tpope/vim-fugitive'
+Plugin 'bling/vim-airline'
+Plugin 'derekwyatt/vim-scala'
+Plugin 'fatih/vim-go'
+Plugin 'gmarik/Vundle.vim'
+Plugin 'kien/ctrlp.vim'
 Plugin 'mattn/gist-vim'
+Plugin 'rodjek/vim-puppet'
+Plugin 'scrooloose/nerdtree'
+Plugin 'scrooloose/syntastic.git'
+Plugin 'tpope/vim-fugitive'
 
 call vundle#end()
 filetype plugin indent on
