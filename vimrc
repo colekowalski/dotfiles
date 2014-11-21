@@ -53,16 +53,6 @@ set noswapfile      " don't have much of a need for these
 let g:airline_powerline_fonts=1
 set laststatus=2
 
-" File-type specific settings
-"autocmd FileType ruby set ts=2|set sw=2|set et
-"autocmd FileType html set ts=2|set sw=2|set et
-"autocmd FileType javascript set ts=2|set sw=2|set et
-"autocmd FileType coffee set ts=2|set sw=2|set et
-"autocmd FileType clojure set ts=2|set sw=2|set et
-"autocmd FileType scala set ts=2|set sw=2|set et
-"autocmd FileType php set ts=4|set sw=4|set et
-"autocmd FileType go set ts=4|set sw=4|set noet
-
 " ctrl-p
 map <leader>f :CtrlP<cr>
 let g:ctrlp_custom_ignore = {
