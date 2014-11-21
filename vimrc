@@ -14,6 +14,8 @@ Plugin 'fatih/vim-go'
 Plugin 'rodjek/vim-puppet'
 Plugin 'scrooloose/syntastic.git'
 Plugin 'altercation/vim-colors-solarized.git'
+Plugin 'tpope/vim-fugitive'
+Plugin 'mattn/gist-vim'
 
 call vundle#end()
 filetype plugin indent on
