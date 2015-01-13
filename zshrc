@@ -33,14 +33,14 @@ bindkey -M viins '^S' history-incremental-search-forward
 bindkey -M viins '^T' transpose-chars
 bindkey -M viins '^Y' yank
 
-## make sure local bin dir is on the path
-if [ -d "$HOME/bin" ]; then
-    export PATH=$HOME/bin:$PATH
-fi
-
 ## load in our customizations
 if [ -d "$HOME/.zsh" ]; then
     for file in $HOME/.zsh/*.zsh; do
         source $file
     done
+fi
+
+## make sure local bin dir is on the path
+if [ -d "$HOME/bin" ]; then
+    export PATH=$HOME/bin:$PATH
 fi
