@@ -26,3 +26,4 @@
 (require 'init-org)
 (require 'init-mail)
 (require 'init-projectile)
+(require 'init-evil)
