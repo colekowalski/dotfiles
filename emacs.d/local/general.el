@@ -1,7 +1,7 @@
 (progn
-  (when (boundp 'menu-bar-mode) (menu-bar-mode -1))
-  (when (boundp 'scroll-bar-mode) (scroll-bar-mode -1))
-  (when (boundp 'tool-bar-mode) (tool-bar-mode -1))
+  (when (fboundp 'menu-bar-mode) (menu-bar-mode -1))
+  (when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
+  (when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
   (when (fboundp 'set-fringe-mode) (set-fringe-mode '(1 . 0))))
 
 ;; no startup screen
