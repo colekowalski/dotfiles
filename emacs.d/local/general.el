@@ -23,7 +23,7 @@
 (setq-default require-final-newline t)
 
 ;; disable line wrapping
-(setq-default truncatl-lines t)
+(setq-default truncate-lines t)
 
 ;; show column numbers
 (column-number-mode t)
