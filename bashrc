@@ -18,3 +18,6 @@ if [[ $UID = 0 ]]; then
     PROMPTCHAR="#"
 fi
 PS1="[$UIDCOLOR\u@\h $BLUE\w$NORMAL]\$(__git_ps1) $PROMPTCHAR "
+
+alias ls="ls --color"
+alias ll="ls -Al"
