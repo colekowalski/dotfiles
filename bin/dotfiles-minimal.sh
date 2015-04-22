@@ -1,7 +1,7 @@
 #!/bin/bash
 
 DOTFILES_DIR="$HOME/dotfiles"
-TO_LINK=(vimrc gitconfig gitignore_global)
+TO_LINK=(bashrc bash_profile vimrc gitconfig gitignore_global)
 
 if [ ! -d $DOTFILES_DIR ]; then
     git clone https://github.com/colekowalski/dotfiles $DOTFILES_DIR
