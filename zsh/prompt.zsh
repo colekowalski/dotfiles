@@ -11,9 +11,9 @@ autoload -U colors && colors
 
 setopt prompt_subst
 
-USER_COLOR="%F{cyan}"
+USER_COLOR="%{$fg[cyan]%}"
 if [[ $UID = 0 ]]; then
-    USER_COLOR="%F{red}"
+    USER_COLOR="%{$fg[red]%}"
 fi
 
-PROMPT='[${USER_COLOR}%n@%m %F{blue}%~$reset_color]$(__git_branch)%# '
+PROMPT='[${USER_COLOR}%n@%m %{$fg[blue]%}%~%{$reset_color%}]$(__git_branch)%# '
