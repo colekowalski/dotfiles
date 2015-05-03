@@ -4,11 +4,12 @@
 
 [alias]
   ar = archive --format=tar
+  ci = commit
+  co = checkout
   dc = diff --cached
   gr = log --graph --full-history --all --color --pretty=format:\"%x1b[31m%h%x09%x1b[32m%d%x1b[0m%x20%s\"
+  oldbranches = for-each-ref --sort=committerdate --format='%(committerdate:short) %(refname:short)' refs/heads/
   st = status
-  co = checkout
-  ci = commit
   wdiff = diff --color-words
 
 [color]
