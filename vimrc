@@ -1,24 +1,8 @@
 set nocompatible
 
-filetype off
+runtime bundle/vim-pathogen/autoload/pathogen.vim
+execute pathogen#infect()
 
-set rtp+=~/.vim/bundle/Vundle.vim/
-call vundle#begin()
-
-Plugin 'bling/vim-airline'
-Plugin 'derekwyatt/vim-scala'
-Plugin 'fatih/vim-go'
-Plugin 'gmarik/Vundle.vim'
-Plugin 'kien/ctrlp.vim'
-Plugin 'mattn/gist-vim'
-Plugin 'mattn/webapi-vim'
-Plugin 'rodjek/vim-puppet'
-Plugin 'scrooloose/nerdtree'
-Plugin 'scrooloose/syntastic.git'
-Plugin 'tomasr/molokai'
-Plugin 'tpope/vim-fugitive'
-
-call vundle#end()
 filetype plugin indent on
 
 set t_Co=256
