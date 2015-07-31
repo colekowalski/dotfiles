@@ -1,3 +1,6 @@
+autoload -U colors && colors
+setopt prompt_subst
+
 function __git_branch {
     if ! git rev-parse 2> /dev/null; then
       return
@@ -7,13 +10,14 @@ function __git_branch {
     echo " (${branch#refs/heads/}) "
 }
 
-autoload -U colors && colors
-
-setopt prompt_subst
 
 USER_COLOR="%{$fg[cyan]%}"
 if [[ $UID = 0 ]]; then
     USER_COLOR="%{$fg[red]%}"
 fi
 
-PROMPT='[${USER_COLOR}%n@%m %{$fg[blue]%}%~%{$reset_color%}]$(__git_branch)%# '
+PROMPT_STATUS=%(?.%{$fg[green]%}ツ.%{$fg[red]%}ಠ_ಠ)%{$reset_color%}
+PROMPT='$PROMPT_STATUS [${USER_COLOR}%n@%m %{$fg[blue]%}%~%{$reset_color%}]$(__git_branch)%# '
+
+MODE_INDICATOR="%{$fg[yellow]%}[n]%{$reset_color%} "
+
