@@ -6,9 +6,9 @@ execute pathogen#infect()
 filetype plugin indent on
 
 set t_Co=256
+let g:solarized_termcolors=16
 set background=dark
-let g:molokai_original=1
-colorscheme molokai
+colorscheme solarized
 syntax on
 
 let mapleader = ","
@@ -53,7 +53,7 @@ autocmd BufReadPost *
 
 " airline
 let g:airline_powerline_fonts=1
-let g:airline_theme='molokai'
+let g:airline_theme='solarized'
 set laststatus=2
 
 " ctrl-p
