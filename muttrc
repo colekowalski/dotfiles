@@ -13,8 +13,7 @@ set certificate_file = ~/.mutt/certificates
 set sort = "threads"
 set sort_aux = "last-date-received"
 
-set editor = "emacsclient -t"
-set query_command = '/home/cole/bin/ldapmail'
+set editor = "vim -c 'set spell spelllang=en'"
 
 auto_view text/html
 alternative_order text/enriched text/plain text text/html
@@ -35,7 +34,7 @@ set mailcap_path = ~/.mutt/mailcap
 
 source ~/.mutt/conf/headers.muttrc
 source ~/.mutt/conf/gpg.muttrc
-source ~/.mutt/conf/solarized.muttrc
+source ~/.mutt/conf/solarized-dark-16.muttrc
 source ~/.mutt/conf/sidebar.muttrc
 source ~/.mutt/mailboxes
 
