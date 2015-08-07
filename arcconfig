@@ -1,0 +1,5 @@
+{
+  "config": {
+    "editor": "vim -c 'set spell spelllang=en tw=72 formatoptions+=t'"
+  }
+}
