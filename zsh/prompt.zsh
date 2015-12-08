@@ -11,13 +11,8 @@ function __git_branch {
 }
 
 
-USER_COLOR="%{$fg[cyan]%}"
-if [[ $UID = 0 ]]; then
-    USER_COLOR="%{$fg[red]%}"
-fi
-
 PROMPT_STATUS=%(?..%{$fg[red]%}ಠ_ಠ )%{$reset_color%}
-PROMPT='${PROMPT_STATUS}[${USER_COLOR}%n@%m %{$fg[blue]%}%~%{$reset_color%}]$(__git_branch)%# '
+PROMPT='${PROMPT_STATUS}%{$fg[blue]%}%~%{$reset_color%}$(__git_branch)%# '
 
 MODE_INDICATOR="%{$fg[yellow]%}[n]%{$reset_color%} "
 
