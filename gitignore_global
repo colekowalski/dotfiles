@@ -9,4 +9,6 @@
 
 .ruby-version
 
-.arcconfig
+.vagrant
+
+.vimrc.local
