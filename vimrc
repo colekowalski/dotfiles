@@ -45,6 +45,10 @@ set noswapfile                  " don't have much of a need for these
 
 set synmaxcol=1024              " syntax coloring long lines is slow
 
+set mouse-=a                    " disable mouse support
+
+nmap <leader>d :%s/\s\+$//e<cr> " delete trailing whitespace
+
 " jump to last cursor position when opening a file
 autocmd BufReadPost *
   \ if line("'\"") > 0 && line("'\"") <= line("$") |
@@ -55,13 +59,6 @@ autocmd BufReadPost *
 let g:airline_powerline_fonts=1
 let g:airline_theme='solarized'
 set laststatus=2
-
-" ctrl-p
-map <leader>f :CtrlP<cr>
-let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v[\/]\.(git|hg|svn)$|/target/|/project/target/|/project/project/',
-  \ 'file': '\v\.%(class|o|png|jpg|jpeg|bmp|jar)$',
-  \ }
 
 " NERDTree stuff...
 map <leader>t :NERDTreeToggle<cr>
