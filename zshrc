@@ -19,4 +19,6 @@ fi
 autoload -Uz compinit
 compinit -i
 
+source $DOTFILES/zsh/vendor/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
 [ -f $HOME/.zshrc.local ] && source $HOME/.zshrc.local
