@@ -39,13 +39,13 @@
 	url = https://github.com/altercation/vim-colors-solarized.git
 [submodule "zsh/vendor/zsh-syntax-highlighting"]
 	path = zsh/vendor/zsh-syntax-highlighting
-	url = git@github.com:zsh-users/zsh-syntax-highlighting.git
+	url = https://github.com/zsh-users/zsh-syntax-highlighting.git
 [submodule "zsh/vendor/dircolors-solarized"]
 	path = zsh/vendor/dircolors-solarized
-	url = git@github.com:seebi/dircolors-solarized.git
+	url = https://github.com/seebi/dircolors-solarized.git
 [submodule "vim/bundle/ag.vim"]
 	path = vim/bundle/ag.vim
-	url = git@github.com:rking/ag.vim.git
+	url = https://github.com/rking/ag.vim.git
 [submodule "vim/bundle/ctrlp.vim"]
 	path = vim/bundle/ctrlp.vim
 	url = https://github.com/ctrlpvim/ctrlp.vim.git
