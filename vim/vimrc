@@ -55,6 +55,9 @@ autocmd BufReadPost *
   \   exe "normal! g`\"" |
   \ endif
 
+" sort scala imports into groups
+let g:scala_sort_across_groups=1
+
 " ctrlp
 nmap <leader>f :CtrlP<cr>
 
