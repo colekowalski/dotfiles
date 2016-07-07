@@ -8,7 +8,7 @@ filetype plugin indent on
 set t_Co=256
 set background=dark
 let base16colorspace=256
-colorscheme base16-solarized
+colorscheme base16-solarized-dark
 syntax on
 
 let mapleader = ","
@@ -62,6 +62,7 @@ let g:scala_sort_across_groups=1
 nmap <leader>f :CtrlP<cr>
 
 " airline
+let g:airline_theme='base16_solarized'
 let g:airline_powerline_fonts=1
 set laststatus=2
 
