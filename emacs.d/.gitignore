@@ -6,3 +6,5 @@ projectile-bookmarks.eld
 var/
 auto-save-list/
 elpa/
+
+ido.last

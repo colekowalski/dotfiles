@@ -7,3 +7,6 @@ xmonad/*.errors
 xmonad/xmonad-*-linux
 
 zsh/_*.zsh
+
+sbt/boot
+sbt/**/target
