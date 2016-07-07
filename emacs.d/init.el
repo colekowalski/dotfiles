@@ -51,6 +51,7 @@
 ;; packages should be initialized first
 (require 'init-package)
 
+(require 'init-flycheck)
 (require 'init-ido)
 (require 'init-org)
 (require 'init-projectile)
