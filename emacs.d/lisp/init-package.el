@@ -5,8 +5,11 @@
 (setq my-package-list '(ag
                         flx-ido
                         dockerfile-mode
+                        flycheck
+                        flycheck-pyflakes
                         gist
                         go-mode
+                        jinja2-mode
                         lua-mode
                         magit
                         php-mode
@@ -16,7 +19,11 @@
                         yaml-mode))
 
 ;; add extra package repos
-(add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/") t)
+(dolist (source '(("gnu"       . "https://elpa.gnu.org/packages/")
+                  ("marmalade" . "https://marmalade-repo.org/packages/")
+                  ("melpa"     . "https://melpa.org/packages/")
+                  ("org"       . "http://orgmode.org/elpa/")))
+  (add-to-list 'package-archives source t))
 
 
 (defun install-packages ()
