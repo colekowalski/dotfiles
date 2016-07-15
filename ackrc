@@ -4,7 +4,7 @@
 --ignore-dir=build
 --ignore-dir=cache
 --ignore-dir=logs
---ignore-dir-target
+--ignore-dir=target
 --ignore-dir=tmp
 
 --ignore-file=is:tags
