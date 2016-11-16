@@ -1,30 +1,23 @@
-set folder = ~/.mail/
+set folder = ~/.mail
 set spoolfile = "+northernbloc/INBOX"
 set mbox_type = Maildir
 set timeout = 3
-set mail_check  = 1
-set sendmail_wait = 0
+set mail_check = 1
 
-## folders
 set header_cache = ~/.mutt/cache/headers
 set message_cachedir = ~/.mutt/cache/bodies
-set certificate_file = ~/.mutt/certificates
+
+set wrap = 80
+set smart_wrap
+set markers = no # no + on wrapped lines
 
 set sort = "threads"
 set sort_aux = "last-date-received"
 
-set editor = "vim -c 'set spell spelllang=en'"
-
 auto_view text/html
-alternative_order text/enriched text/plain text text/html
+alternative_order text/plain text/enriched text/html *
 
-set copy
-
-set smart_wrap = yes
-set markers = no
-
-## gpg
-set pgp_sign_as = 8D991999
+set pgp_sign_as = 7847EDF0
 set pgp_use_gpg_agent = yes
 set pgp_timeout = 3600
 set crypt_autosign = yes
@@ -34,10 +27,9 @@ set mailcap_path = ~/.mutt/mailcap
 
 source ~/.mutt/conf/headers.muttrc
 source ~/.mutt/conf/gpg.muttrc
-source ~/.mutt/conf/solarized-dark-16.muttrc
+source ~/.mutt/conf/solarized-dark.muttrc
 source ~/.mutt/conf/sidebar.muttrc
 source ~/.mutt/mailboxes
 
 folder-hook disqus/* source ~/.mutt/accounts/cole.disqus.com
 folder-hook northernbloc/* source ~/.mutt/accounts/cole.northernbloc.org
-

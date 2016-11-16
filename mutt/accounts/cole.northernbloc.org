@@ -2,5 +2,8 @@ set from  = "cole@northernbloc.org"
 set record = "+northernbloc/Sent"
 set sendmail = "msmtp -a northernbloc"
 
+# use default trash behavior
+unset trash
+
 set sig_dashes = no
 set signature = "~/.mutt/accounts/signature"
