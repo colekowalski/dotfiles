@@ -10,3 +10,5 @@ zsh/_*.zsh
 
 sbt/boot
 sbt/**/target
+
+config/systemd/user/*.wants
