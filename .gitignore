@@ -12,3 +12,5 @@ sbt/boot
 sbt/**/target
 
 config/systemd/user/*.wants
+
+karabiner.d/log
