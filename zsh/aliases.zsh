@@ -1,2 +1,11 @@
-alias ll="ls -Al"
-alias irc="ssh -t irc 'tmux attach -t irc || tmux new -s irc'"
+case $OSTYPE in
+    darwin*)
+        alias ls="ls -G"
+        alias ll="ls -Alh"
+    ;;
+
+    linux-gnu)
+        alias ls="ls --color"
+        alias ll="ls -Alh --group-directories-first"
+        ;;
+esac
