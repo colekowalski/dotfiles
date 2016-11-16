@@ -1,0 +1,11 @@
+[Unit]
+Description=OfflineIMAP Timer
+
+[Timer]
+#OnCalendar=*:*:0/60
+OnBootSec=60
+OnUnitInactiveSec=180
+Unit=offlineimap.service
+
+[Install]
+WantedBy=default.target

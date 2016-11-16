@@ -1,5 +1,5 @@
 ! -- xft settings -- !
-Xft.dpi: 96
+Xft.dpi: 220
 Xft.rgba: rgb
 Xft.hinting: true
 Xft.autohint: false
@@ -9,51 +9,72 @@ Xft.antialias: true
 Xft.embolden: false
 Xft.render: true
 
+Xcursor.size: 32
+
 ! -- urxvt settings -- !
-URxvt*.transparent: false
+URxvt.termName: xterm-256color
+URxvt.transparent: false
+URxvt.iso14755: false
+URxvt.urgentOnBell: true
+
 URxvt.scrollBar: false
+URxvt.internalBorder: 0px
+URxvt.externalBorder: 0px
+URxvt.borderLess: false
 
-URxvt*depth: 32
-URxvt*dynamicColors: on
-!URxvt*background: [90]#202020
-!URxvt.foreground: white
-!URxvt.background: black
+URxvt.depth: 32
+URxvt.dynamicColors: on
 
-URxvt*font: xft:Ubuntu Mono:regular:pixelsize=15
-URxvt*imFont: xft:Ubuntu Mono:italic:pixelsize=15
-URxvt*boldFont: xft:Ubuntu Mono:bold:pixelsize=15
-URxvt*letterSpace:                    -1*/
+URxvt.font: xft:Ubuntu Mono:regular:size=10
+URxvt.imFont: xft:Ubuntu Mono:italic:size=10
+URxvt.boldFont: xft:Ubuntu Mono:bold:size=10
+URxvt.letterSpace: -1
 
-! -- urxvt colors --!
-URxvt*cursorColor:      #d0d0d0
-URxvt*colorIT:          #c37561
-URxvt*colorUL:          #a0a57e
-!Background / Foreground
-URxvt*background: #202020
-URxvt*foreground: #ddccbb
-!Black / Light black
-URxvt*color0: #222222
-URxvt*color8: #666666
-!Red / Light red
-URxvt*color1:  #cc4747
-URxvt*color9:  #bf5858
-!Green / Light green
-URxvt*color2:  #a0cf5d
-URxvt*color10: #b8d68c
-!Yellow / Light yellow
-URxvt*color3:  #e0a524
-URxvt*color11: #edB85c
-!Blue / Light blue
-URxvt*color4:  #4194d9
-URxvt*color12: #60aae6
-!Purple / Light purple
-URxvt*color5:  #cc2f6e
-URxvt*color13: #db588c
-!Cyan / Light cyan
-URxvt*color6:  #6d878d
-URxvt*color14:  #42717b
-!White / Light white...?
-URxvt*color7:  #dedede
-URxvt*color15: #f2f2f2
+URxvt.perl-ext-common: default,matcher
+URxvt.url-launcher: /usr/bin/chromium
+URxvt.matcher.button: 1
+URxvt.keysym.C-Delete: perl:matcher:last
+URxvt.keysym.M-Delete: perl:matcher:list
 
-dzen2.font: xft:Ubuntu Mono:regular:pixelsize=12
+dzen2.font: xft:Ubuntu Mono:regular:size=10
+
+! Base16 Solarized Dark
+! Scheme: Ethan Schoonover (http://ethanschoonover.com/solarized)
+#define base00 #002b36
+#define base01 #073642
+#define base02 #586e75
+#define base03 #657b83
+#define base04 #839496
+#define base05 #93a1a1
+#define base06 #eee8d5
+#define base07 #fdf6e3
+#define base08 #dc322f
+#define base09 #cb4b16
+#define base0A #b58900
+#define base0B #859900
+#define base0C #2aa198
+#define base0D #268bd2
+#define base0E #6c71c4
+#define base0F #d33682
+
+*.foreground:   base05
+*.background:   base00
+*.cursorColor:  base05
+
+*.color0:       base00
+*.color1:       base08
+*.color2:       base0B
+*.color3:       base0A
+*.color4:       base0D
+*.color5:       base0E
+*.color6:       base0C
+*.color7:       base05
+
+*.color8:       base03
+*.color9:       base09
+*.color10:      base01
+*.color11:      base02
+*.color12:      base04
+*.color13:      base06
+*.color14:      base0F
+*.color15:      base07
