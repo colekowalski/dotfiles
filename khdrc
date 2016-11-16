@@ -1,0 +1,28 @@
+# full paths are used to work around https://github.com/koekeishiya/khd/issues/9
+
+## shift focus
+lalt - up: /usr/local/bin/kwmc window -f north
+lalt - down: /usr/local/bin/kwmc window -f south
+lalt - left: /usr/local/bin/kwmc window -f west
+lalt - right: /usr/local/bin/kwmc window -f east
+lalt - k ![iTerm2,Terminal]: /usr/local/bin/kwmc window -f north
+lalt - j ![iTerm2,Terminal]: /usr/local/bin/kwmc window -f south
+lalt - l ![iTerm2,Terminal]: /usr/local/bin/kwmc window -f east
+lalt - h ![iTerm2,Terminal]: /usr/local/bin/kwmc window -f west
+
+## move windows
+lalt + shift - up: /usr/local/bin/kwmc window -m north
+lalt + shift - down: /usr/local/bin/kwmc window -m south
+lalt + shift - right: /usr/local/bin/kwmc window -m east
+lalt + shift - left: /usr/local/bin/kwmc window -m west
+lalt + shift - k ![iTerm2,Terminal]: /usr/local/bin/kwmc window -m north
+lalt + shift - j ![iTerm2,Terminal]: /usr/local/bin/kwmc window -m south
+lalt + shift - l ![iTerm2,Terminal]: /usr/local/bin/kwmc window -m east
+lalt + shift - h ![iTerm2,Terminal]: /usr/local/bin/kwmc window -m west
+
+## floating
+lalt + shift - f: /usr/local/bin/kwmc window -t focused
+
+## displays
+lctrl + lalt - left: /usr/local/bin/kwmc display -f prev
+lctrl + lalt - right: /usr/local/bin/kwmc display -f next
