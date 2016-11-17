@@ -20,6 +20,10 @@ alt + shift - j ![iTerm2,Terminal]: /usr/local/bin/kwmc window -m south
 alt + shift - l ![iTerm2,Terminal]: /usr/local/bin/kwmc window -m east
 alt + shift - h ![iTerm2,Terminal]: /usr/local/bin/kwmc window -m west
 
+## move window to space
+ctrl + alt + shift - left: /usr/local/bin/kwmc window -m space left
+ctrl + alt + shift - right: /usr/local/bin/kwmc window -m space right
+
 ## floating
 alt + shift - f: /usr/local/bin/kwmc window -t focused
 
