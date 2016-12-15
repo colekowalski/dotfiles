@@ -18,3 +18,4 @@ kwmc rule owner="Airmail" properties={float="true"}
 kwmc rule owner="VMware Fusion" properties={float="true"}
 kwmc rule owner="System Preferences" properties={float="true"}
 kwmc rule owner="Finder" properties={float="true"}
+kwmc rule owner="Reeder" properties={float="true"}
