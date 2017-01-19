@@ -14,6 +14,7 @@ kwmc float-non-resizable on
 
 ## rules
 kwmc rule owner="OmniFocus" properties={float="true"}
+kwmc rule owner="VLC" properties={float="true"}
 kwmc rule owner="Airmail" properties={float="true"}
 kwmc rule owner="VMware Fusion" properties={float="true"}
 kwmc rule owner="System Preferences" properties={float="true"}
