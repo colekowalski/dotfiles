@@ -60,6 +60,10 @@ let g:scala_sort_across_groups=1
 
 " ctrlp
 nmap <leader>f :CtrlP<cr>
+if executable('ag')
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+endif
+
 " vim-grepper
 nmap <leader>gr :Grepper<cr>
 nmap <leader>gw :Grepper -cword<cr>
