@@ -60,6 +60,9 @@ let g:scala_sort_across_groups=1
 
 " ctrlp
 nmap <leader>f :CtrlP<cr>
+" vim-grepper
+nmap <leader>gr :Grepper<cr>
+nmap <leader>gw :Grepper -cword<cr>
 
 " airline
 let g:airline_theme='base16_solarized'
