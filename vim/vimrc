@@ -8,7 +8,7 @@ filetype plugin indent on
 set t_Co=256
 set background=dark
 let base16colorspace=256
-colorscheme base16-solarized-dark
+colorscheme base16-chalk
 syntax on
 
 let mapleader = ","
@@ -73,8 +73,8 @@ autocmd! BufReadPost * Neomake
 autocmd! BufWritePost * Neomake
 
 " airline
-let g:airline_theme='base16_solarized'
-let g:airline_powerline_fonts=1
+let g:airline_theme='base16_chalk'
+let g:airline_powerline_fonts=0
 set laststatus=2
 
 " NERDTree stuff...
