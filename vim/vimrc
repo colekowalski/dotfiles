@@ -1,7 +1,17 @@
 set nocompatible
 
-runtime bundle/vim-pathogen/autoload/pathogen.vim
-execute pathogen#infect()
+call plug#begin('~/.cache/vim/plugged')
+Plug 'chriskempson/base16-vim'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'mhinz/vim-grepper'
+Plug 'saltstack/salt-vim'
+Plug 'scrooloose/nerdtree'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-fugitive'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'w0rp/ale'
+call plug#end()
 
 filetype plugin indent on
 
@@ -67,10 +77,6 @@ endif
 " vim-grepper
 nmap <leader>gr :Grepper<cr>
 nmap <leader>gw :Grepper -cword<cr>
-
-" neomake
-autocmd! BufReadPost * Neomake
-autocmd! BufWritePost * Neomake
 
 " airline
 let g:airline_theme='base16_chalk'
