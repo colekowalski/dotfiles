@@ -12,3 +12,7 @@
 .vagrant
 
 .vimrc.local
+
+## intellij
+.idea
+*.iml

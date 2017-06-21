@@ -1,6 +1,7 @@
 [user]
   name = Cole Kowalski
   email = cole@northernbloc.org
+  signingkey = 49B9A4F9D49940C9EE2047B5BF310ED27847EDF0
 
 [alias]
   ar = archive --format=tar
@@ -17,6 +18,9 @@
   diff = auto
   interactive = auto
   status = auto
+
+[commit]
+  gpgsign = true
 
 [core]
   excludesfile = ~/.gitignore_global
