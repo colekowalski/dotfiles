@@ -11,3 +11,6 @@ BASE16_SHELL="$DOTFILES/zsh/vendor/base16-shell/scripts/base16-chalk.sh"
 ## make (backward|forward)-word behave like bash
 autoload -U select-word-style
 select-word-style bash
+
+## emacs mode
+bindkey -e
