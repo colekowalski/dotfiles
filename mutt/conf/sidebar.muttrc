@@ -1,6 +1,14 @@
 set sidebar_visible = yes
+
+set sidebar_short_path = yes
 set sidebar_folder_indent = yes
+set sidebar_indent_string = '  '
+
 set sidebar_width = 32
+
+set mail_check_stats
+
+set sidebar_format = '%B%?F? [%F]?%* %?N?%N/?%S'
 
 # bindings
 bind index \Cn     sidebar-next
