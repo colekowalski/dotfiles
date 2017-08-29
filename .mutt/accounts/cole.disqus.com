@@ -6,7 +6,7 @@ set sendmail = "msmtp -a disqus"
 # copy of the deleted message in the "All Mail" folder when it is
 # deleted from the Inbox or another label. Another fun gotcha with
 # GMail's fake folders.
-#set trash="=disqus/Trash"
+set trash="=disqus/Trash"
 
 set sig_dashes = no
 set signature = "~/.mutt/accounts/signature"
