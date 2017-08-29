@@ -6,11 +6,13 @@ Plug 'ctrlpvim/ctrlp.vim'
 Plug 'mhinz/vim-grepper'
 Plug 'saltstack/salt-vim'
 Plug 'scrooloose/nerdtree'
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'w0rp/ale'
+Plug 'zchee/deoplete-jedi'
 call plug#end()
 
 filetype plugin indent on
@@ -80,7 +82,7 @@ nmap <leader>gw :Grepper -cword<cr>
 
 " airline
 let g:airline_theme='base16_chalk'
-let g:airline_powerline_fonts=0
+let g:airline_powerline_fonts=1
 set laststatus=2
 
 " NERDTree stuff...
@@ -88,6 +90,8 @@ map <leader>t :NERDTreeToggle<cr>
 let NERDTreeQuitOnOpen = 1      " close nerdtree after opening a file
 autocmd vimenter * wincmd p     " start vim in non-nerdtree buffer
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+
+let g:deoplete#enable_at_startup = 1
 
 " source user settings
 if filereadable(expand("~/.vimrc.local"))
