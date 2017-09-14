@@ -2,11 +2,14 @@ set nocompatible
 
 call plug#begin('~/.cache/vim/plugged')
 Plug 'chriskempson/base16-vim'
-Plug 'ctrlpvim/ctrlp.vim'
+Plug 'derekwyatt/vim-scala'
+Plug 'gre/play2vim'
 Plug 'mhinz/vim-grepper'
 Plug 'saltstack/salt-vim'
 Plug 'scrooloose/nerdtree'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'Shougo/denite.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'Shougo/neomru.vim'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'vim-airline/vim-airline'
@@ -70,15 +73,12 @@ autocmd BufReadPost *
 " sort scala imports into groups
 let g:scala_sort_across_groups=1
 
-" ctrlp
-nmap <leader>f :CtrlP<cr>
-if executable('ag')
-  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-endif
-
 " vim-grepper
 nmap <leader>gr :Grepper<cr>
 nmap <leader>gw :Grepper -cword<cr>
+
+nnoremap <leader>f :Denite file_rec<cr>
+nnoremap <leader>b :Denite buffer file_mru<cr>
 
 " airline
 let g:airline_theme='base16_chalk'
