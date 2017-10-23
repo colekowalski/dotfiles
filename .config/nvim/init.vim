@@ -23,7 +23,7 @@ filetype plugin indent on
 set t_Co=256
 set background=dark
 let base16colorspace=256
-colorscheme base16-chalk
+colorscheme base16-solarized-dark
 syntax on
 
 let mapleader = ","
@@ -81,7 +81,7 @@ nnoremap <leader>f :Denite file_rec<cr>
 nnoremap <leader>b :Denite buffer file_mru<cr>
 
 " airline
-let g:airline_theme='base16_chalk'
+let g:airline_theme='base16_solarized'
 let g:airline_powerline_fonts=1
 set laststatus=2
 
