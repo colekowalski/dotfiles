@@ -45,7 +45,7 @@ set undofile
 
 set nowrap                      " disable line wrapping
 
-set number                      " show line numbers
+set number relativenumber       " show hybrid line numbers
 set ruler                       " show the cursor position
 
 set showcmd                     " display imcomplete commands
