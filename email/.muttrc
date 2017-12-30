@@ -4,8 +4,8 @@ set mbox_type = Maildir
 set timeout = 3
 set mail_check = 1
 
-set header_cache = ~/.mutt/cache/headers
-set message_cachedir = ~/.mutt/cache/bodies
+set header_cache = ~/.cache/mutt/headers
+set message_cachedir = ~/.cache/mutt/bodies
 
 set wrap = 80
 set smart_wrap
