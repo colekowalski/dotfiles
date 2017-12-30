@@ -20,6 +20,8 @@ call plug#end()
 
 filetype plugin indent on
 
+let g:python3_host_prog = expand('~/.virtualenvs/neovim/bin/python3')
+
 set t_Co=256
 set background=dark
 let base16colorspace=256
