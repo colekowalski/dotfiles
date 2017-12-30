@@ -1,13 +1,6 @@
 mutt/cache
 mutt/mailboxes
 
-xmonad/*.o
-xmonad/*.hi
-xmonad/*.errors
-xmonad/xmonad-*-linux
-
-zsh/_*.zsh
-
 sbt/boot
 sbt/**/target
 
