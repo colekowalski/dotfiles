@@ -1,0 +1,27 @@
+## connect to a host and open/connect to a tmux session
+function tssh {
+  local session_name=$USER
+  if [ -z $session_name ]; then
+    session_name=$(whoami)
+  fi
+
+  while getopts ":s:" opt; do
+    case $opt in
+      s)
+        session_name="$OPTARG"
+        ;;
+      \?)
+        echo "Invalid option: -$OPTARG" >&2
+        return 1
+        ;;
+      :)
+        echo "Option -$OPTARG requires an argument" >&2
+        return 1
+        ;;
+    esac
+  done
+
+  shift $((OPTIND-1))
+
+  ssh -t $@ "tmux attach -t $session_name || tmux new-session -s $session_name"
+}

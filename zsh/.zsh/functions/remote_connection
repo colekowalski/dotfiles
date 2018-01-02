@@ -1,0 +1,10 @@
+#!/usr/bin/env zsh
+
+# Are we currently over an SSH connection?
+function remote_connection {
+  if [ -n "$SSH_CONNECTION" ] || [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
+    return 0
+  fi
+
+  return 1
+}

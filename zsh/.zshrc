@@ -1,12 +1,9 @@
-HISTFILE=~/.zsh_history
-HISTSIZE=1000
-SAVEHIST=10000
-
-export DOTFILES=$HOME/.dotfiles
-
-setopt hist_ignore_dups
-setopt hist_ignore_space
-setopt hist_expire_dups_first
+## load functions first as they may be required later
+if [ -d $HOME/.zsh/functions ]; then
+  for file in $HOME/.zsh/functions/*; do
+    source $file
+  done
+fi
 
 ## load in our customizations
 if [ -d "$HOME/.zsh" ]; then

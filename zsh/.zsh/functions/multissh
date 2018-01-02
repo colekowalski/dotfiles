@@ -1,0 +1,26 @@
+function open-in-multiplexer {
+  local name=$1
+  local cmd=$2
+  if [[ $TMUX != "" ]]; then
+    tmux new-window -a -n $name "$cmd"
+  else
+    screen -X screen -t $name sh -c "$cmd"
+  fi
+}
+
+## open a list of servers in an active tmux or screen session.
+## hosts may be supplied as args or on stdin
+function multissh {
+  ## servers supplied as arguments
+  if [ $# -gt 0 ]; then
+    for server in ${@:1}; do
+      open-in-multiplexer $server "ssh -At -o "\""ConnectTimeout 3"\"" $server"
+    done
+
+  ## servers supplied on stdin
+  else
+    while read server; do
+      open-in-multiplexer $server "ssh -At -o "\""ConnectTimeout 3"\"" $server"
+    done
+  fi
+}

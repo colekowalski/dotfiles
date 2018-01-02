@@ -5,8 +5,10 @@
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
 
 # Load base16 shell configuration
-BASE16_SHELL="$HOME/.zsh/vendor/base16-shell/scripts/base16-solarized-dark.sh"
-[[ -s $BASE16_SHELL ]] && source $BASE16_SHELL
+if ! remote_connection; then
+  BASE16_SHELL="$HOME/.zsh/vendor/base16-shell/scripts/base16-solarized-dark.sh"
+  [[ -s $BASE16_SHELL ]] && source $BASE16_SHELL
+fi
 
 ## make (backward|forward)-word behave like bash
 autoload -U select-word-style

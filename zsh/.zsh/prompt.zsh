@@ -10,5 +10,12 @@ function __git_branch {
     echo " (${branch#refs/heads/}) "
 }
 
-#PROMPT_STATUS=%(?..%{$fg[red]%}ಠ_ಠ )%{$reset_color%}
-PROMPT='${PROMPT_STATUS}[%{$fg[blue]%}%~%{$reset_color%}]$(__git_branch)%# '
+PROMPT_HOST=""
+PROMPT_WARN=""
+
+if remote_connection; then
+  PROMPT_HOST="%{$fg[green]%}%n@%M%{$reset_color%} "
+  PROMPT_WARN="[ %{$fg[red]%}PROD%{$reset_color%} ] "
+fi
+
+PROMPT='${PROMPT_WARN}[${PROMPT_HOST}%{$fg[blue]%}%~%{$reset_color%}]$(__git_branch)%# '

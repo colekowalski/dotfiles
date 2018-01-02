@@ -7,6 +7,7 @@ setopt hist_fcntl_lock
 setopt extended_history
 setopt share_history
 
+setopt hist_ignore_dups
 setopt hist_save_no_dups
 setopt hist_find_no_dups
 setopt hist_expire_dups_first
