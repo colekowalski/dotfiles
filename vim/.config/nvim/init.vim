@@ -3,6 +3,7 @@ set nocompatible
 call plug#begin('~/.cache/vim/plugged')
 Plug 'chriskempson/base16-vim'
 Plug 'derekwyatt/vim-scala'
+Plug 'fatih/vim-go'
 Plug 'gre/play2vim'
 Plug 'mhinz/vim-grepper'
 Plug 'saltstack/salt-vim'
@@ -90,6 +91,7 @@ set laststatus=2
 " NERDTree stuff...
 map <leader>t :NERDTreeToggle<cr>
 let NERDTreeQuitOnOpen = 1      " close nerdtree after opening a file
+let NERDTreeMinimalUI = 1       " don't display the help line(s)
 autocmd vimenter * wincmd p     " start vim in non-nerdtree buffer
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
