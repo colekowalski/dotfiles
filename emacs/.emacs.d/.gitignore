@@ -1,0 +1,11 @@
+auto-save-list/
+elpa/
+.python-environments/
+
+custom-set.el
+bookmarks
+projectile-bookmarks.eld
+ac-comphist.dat
+
+*.elc
+*.ec
