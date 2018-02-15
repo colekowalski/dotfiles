@@ -23,7 +23,7 @@
   gpgsign = true
 
 [core]
-  excludesfile = ~/.config/gitignore
+  excludesfile = ~/.config/git/gitignore
 
 [push]
   default = tracking
