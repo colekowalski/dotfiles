@@ -1,0 +1,18 @@
+[style]
+based_on_style = google
+
+column_limit = 120
+
+align_closing_bracket_with_visual_indent = false
+
+dedent_closing_brackets = true
+
+indent_dictionary_value = true
+
+; PEP-0257: Insert a blank line after all docstrings (one-line or multi-line)
+;   that document a class -- generally speaking, the class's methods are
+;   separated from each other by a single blank line, and the docstring needs
+;   to be offset from the first method by a blank line.
+;
+; This maintains consistency for classes with no docstrings
+blank_line_before_nested_class_or_def = true
