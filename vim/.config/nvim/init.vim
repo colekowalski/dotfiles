@@ -4,6 +4,7 @@ call plug#begin('~/.cache/vim/plugged')
 Plug 'chriskempson/base16-vim'
 Plug 'derekwyatt/vim-scala'
 Plug 'fatih/vim-go'
+Plug 'gisraptor/vim-lilypond-integrator'
 Plug 'gre/play2vim'
 Plug 'mhinz/vim-grepper'
 Plug 'saltstack/salt-vim'
