@@ -1,0 +1,7 @@
+escape ^bb
+defescape ^bb
+
+bind j focus down
+bind k focus up
+bind h focus left
+bind l focus right
