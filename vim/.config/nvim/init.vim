@@ -6,11 +6,13 @@ Plug 'derekwyatt/vim-scala'
 Plug 'fatih/vim-go'
 Plug 'gisraptor/vim-lilypond-integrator'
 Plug 'gre/play2vim'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
+Plug 'junegunn/fzf.vim'
 Plug 'mhinz/vim-grepper'
+Plug 'rodjek/vim-puppet'
 Plug 'saltstack/salt-vim'
 Plug 'scrooloose/nerdtree'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'Shougo/denite.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'Shougo/neomru.vim'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
@@ -18,6 +20,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'w0rp/ale'
 Plug 'zchee/deoplete-jedi'
+
 call plug#end()
 
 filetype plugin indent on
@@ -81,8 +84,8 @@ let g:scala_sort_across_groups=1
 nmap <leader>gr :Grepper<cr>
 nmap <leader>gw :Grepper -cword<cr>
 
-nnoremap <leader>f :Denite file_rec<cr>
-nnoremap <leader>b :Denite buffer file_mru<cr>
+nnoremap <leader>f :Files<cr>
+nnoremap <leader>b :Buffers<cr>
 
 " airline
 let g:airline_theme='base16_solarized'
