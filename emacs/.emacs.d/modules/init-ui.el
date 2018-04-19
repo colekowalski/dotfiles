@@ -8,14 +8,6 @@
 (setq-default line-number-mode t)
 (setq-default column-number-mode t)
 
-;; disable backup files
-(setq-default backup-inhibited t)
-(setq-default make-backup-files nil)
-
-;; whitespace
-(setq-default show-trailing-whitespace t)
-(setq-default require-final-newline t)
-
 ;; disable visual line wrapping
 (setq-default truncate-lines t)
 

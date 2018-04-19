@@ -10,6 +10,7 @@
 (setq load-prefer-newer t)
 
 (require 'init-package)
+(require 'init-general)
 (require 'init-ui)
 ;(require 'init-evil)
 (require 'init-ivy)
