@@ -1,3 +1,5 @@
+set realname = "Cole Kowalski"
+
 set folder = ~/.mail
 set spoolfile = "+northernbloc/Inbox"
 set mbox_type = Maildir
@@ -7,7 +9,6 @@ set mail_check = 1
 set header_cache = ~/.cache/mutt/headers
 set message_cachedir = ~/.cache/mutt/bodies
 
-set wrap = 80
 set smart_wrap
 set markers = no # no + on wrapped lines
 
@@ -28,11 +29,13 @@ set mailcap_path = ~/.mutt/mailcap
 macro index,pager \cb "<pipe-message> urlscan<Enter>"
 macro attach,compose \cb "<pipe-entry> urlscan<Enter>"
 
-source ~/.mutt/conf/headers.muttrc
-source ~/.mutt/conf/gpg.muttrc
-source ~/.mutt/conf/solarized-dark.muttrc
-source ~/.mutt/conf/sidebar.muttrc
-source ~/.mutt/mailboxes
+source ~/.mutt/conf/headers.rc
+source ~/.mutt/conf/gpg.rc
+source ~/.mutt/conf/colors.rc
+source ~/.mutt/conf/sidebar.rc
 
-folder-hook disqus/* source ~/.mutt/accounts/cole.disqus.com
-folder-hook northernbloc/* source ~/.mutt/accounts/cole.northernbloc.org
+mailboxes `python ~/.mutt/mailboxes.py`
+
+folder-hook disqus/* source ~/.mutt/accounts/disqus
+folder-hook northernbloc/* source ~/.mutt/accounts/northernbloc
+folder-hook zeta/* source ~/.mutt/accounts/zeta

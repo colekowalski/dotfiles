@@ -1,1 +1,6 @@
 text/html; elinks -dump ; copiousoutput;
+application/pdf; evince %s
+image/jpg; feh %s
+image/jpeg; feh %s
+image/gif; feh %s
+image/png; feh %s

@@ -1,0 +1,9 @@
+set from  = "ckowalski@zetaglobal.com"
+set record = "+zeta/Sent Items"
+set sendmail = "msmtp -a zeta"
+
+# use default trash behavior
+unset trash
+
+set sig_dashes = no
+set signature = "~/.mutt/accounts/signature"
