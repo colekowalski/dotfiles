@@ -6,20 +6,26 @@ This will first attempt to use the locally-defined variable
 doesn't exist."
   (hack-local-variables)
   (cond ((when (and (boundp 'project-venv) project-venv) project-venv))
-	((when (fboundp 'projectile-project-name) (projectile-project-name)))))
+	((when (fboundp 'projectile-project-name) (projectile-project-name)))
+	(t nil)))
 
 (use-package virtualenvwrapper
   :ensure t)
 
+(use-package pipenv
+  :ensure t)
+
 (use-package jedi
   :ensure t
-  :after virtualenvwrapper
+  :after (:all virtualenvwrapper pipenv)
   :config
   (add-hook 'python-mode-hook
 	    (lambda ()
-	      (let ((venv (project-virtualenv)))
-		(when venv
-		  (venv-workon venv)))
+	      (if (pipenv-project?)
+		    (pipenv-activate)
+		(let ((venv (project-virtualenv)))
+		  (when venv
+		    (venv-workon venv))))
 	      (jedi:setup))))
 
 (use-package company-jedi
