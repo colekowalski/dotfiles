@@ -1,5 +1,5 @@
 set from  = "cole@disqus.com"
-set record = "=disqus/Sent Mail"
+set record = "=disqus/[Gmail]/Sent Mail"
 set sendmail = "msmtp -a disqus"
 
 # Move messages to GMail trash folder. Otherwise we are left with a
