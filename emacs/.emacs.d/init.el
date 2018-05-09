@@ -20,3 +20,4 @@
 (require 'init-python)
 (require 'init-magit)
 (require 'init-saltstack)
+(require 'init-scala)
