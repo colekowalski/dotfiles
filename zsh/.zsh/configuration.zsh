@@ -6,7 +6,7 @@ ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
 
 # Load base16 shell configuration
 if ! remote_connection; then
-  BASE16_SHELL="$HOME/.zsh/vendor/base16-shell/scripts/base16-solarized-dark.sh"
+  BASE16_SHELL="$HOME/.zsh/vendor/base16-shell/scripts/base16-tomorrow-night.sh"
   [[ -s $BASE16_SHELL ]] && source $BASE16_SHELL
 fi
 

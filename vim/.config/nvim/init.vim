@@ -30,7 +30,7 @@ let g:python3_host_prog = expand('~/.virtualenvs/neovim/bin/python3')
 set t_Co=256
 set background=dark
 let base16colorspace=256
-colorscheme base16-solarized-dark
+colorscheme base16-tomorrow-night
 syntax on
 
 let mapleader = ","
@@ -88,7 +88,7 @@ nnoremap <leader>f :Files<cr>
 nnoremap <leader>b :Buffers<cr>
 
 " airline
-let g:airline_theme='base16_solarized'
+let g:airline_theme='base16_tomorrow'
 let g:airline_powerline_fonts=1
 set laststatus=2
 
