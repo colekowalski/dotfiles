@@ -16,5 +16,14 @@
 (setq-default show-trailing-whitespace t)
 (setq-default require-final-newline t)
 
+;; disable Ctrl-z on GUI frames
+(defun cmk/suspend-frame ()
+  "Disable frame suspension in GUI frames"
+  (interactive)
+  (if (display-graphic-p)
+      (message "Frame suspension disabled for graphical displays")
+    (suspend-frame)))
+(global-set-key (kbd "C-z") 'cmk/suspend-frame)
+
 (provide 'init-general)
 

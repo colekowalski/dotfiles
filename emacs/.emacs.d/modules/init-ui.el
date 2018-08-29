@@ -29,20 +29,11 @@
 
 (global-font-lock-mode t)
 
-(use-package doom-themes
+(use-package zerodark-theme
  :ensure t
- :init
- (defun cmk/load-doom-theme (&optional frame)
-   (with-selected-frame (or frame (selected-frame))
-     (load-theme 'doom-one t)
-     (doom-themes-org-config)
-     (doom-themes-neotree-config)))
  :config
- (if (daemonp)
-     (add-hook 'after-make-frame-functions
-	       (lambda (frame)
-		 (cmk/load-doom-theme frame)))
-   (cmk/load-doom-theme)))
+ (load-theme 'zerodark t)
+ (zerodark-setup-modeline-format))
 
 (use-package neotree
   :ensure t
