@@ -13,6 +13,7 @@
 (require 'init-general)
 (require 'init-ui)
 (require 'init-ivy)
+(require 'init-keyfreq)
 (require 'init-projectile)
 (require 'init-company)
 (require 'init-org)
