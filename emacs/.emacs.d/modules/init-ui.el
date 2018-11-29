@@ -29,17 +29,14 @@
 
 (global-font-lock-mode t)
 
-(use-package zerodark-theme
- :ensure t
- :config
- (load-theme 'zerodark t)
- (zerodark-setup-modeline-format))
-
-(use-package neotree
+(use-package doom-themes
   :ensure t
   :config
-  (add-hook 'neotree-mode-hook
-	    (lambda ()
-	      (define-key evil-normal-state-local-map (kbd "RET") 'neotree-enter))))
+  (load-theme 'doom-one t))
+
+(use-package doom-modeline
+  :ensure t
+  :defer t
+  :hook (after-init . doom-modeline-init))
 
 (provide 'init-ui)
