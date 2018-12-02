@@ -10,6 +10,7 @@
 (setq load-prefer-newer t)
 
 (require 'init-package)
+(require 'init-flycheck)
 (require 'init-general)
 (require 'init-ui)
 (require 'init-ivy)
