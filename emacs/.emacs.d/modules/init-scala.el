@@ -1,7 +1,11 @@
 (use-package scala-mode
-  :ensure t)
+  :ensure t
+  :mode ("\\.scala\\'" . scala-mode))
 
 (use-package ensime
-  :ensure t)
+  :defer t
+  :ensure t
+  :init
+  (setq ensime-startup-notification nil))
 
 (provide 'init-scala)
