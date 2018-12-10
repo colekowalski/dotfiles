@@ -25,4 +25,10 @@
 	  ("J" "Journal" entry (file+datetree "/home/cole/org/work.org")
 	   "** %U\n%?"))))
 
+(org-babel-do-load-languages 'org-babel-load-languages
+                             '((emacs-lisp . t)
+			       (python . t)
+                               (ruby . t)
+			       (shell . t)))
+
 (provide 'init-org)
