@@ -15,23 +15,20 @@ doesn't exist."
 (use-package pipenv
   :ensure t)
 
-(use-package jedi
-  :ensure t
-  :after (:all virtualenvwrapper pipenv)
-  :config
-  (add-hook 'python-mode-hook
-	    (lambda ()
-	      (if (pipenv-project?)
-		    (pipenv-activate)
-		(let ((venv (project-virtualenv)))
-		  (when venv
-		    (venv-workon venv))))
-	      (jedi:setup))))
-
 (use-package company-jedi
   :ensure t
-  :after (:all company jedi)
+  :after (:all company pipenv virtualenvwrapper)
   :config
-  (add-to-list 'company-backends 'company-jedi))
+  (add-to-list 'company-backends 'company-jedi)
+  (add-hook 'python-mode-hook
+	    (lambda ()
+	      (venv-deactivate)
+	      (pipenv-deactivate)
+	      (cond ((pipenv-project?)
+		     (pipenv-activate))
+		    ((projectile-project-p)
+		     (if (venv-is-valid (projectile-project-name))
+			 (venv-workon (projectile-project-name)))))
+	      (jedi:setup))))
 
 (provide 'init-python)
