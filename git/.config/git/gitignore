@@ -13,6 +13,10 @@
 
 .vimrc.local
 
+# emacs project-local stuff
+.projectile
+.dir-locals.el
+
 ## intellij
 .idea
 *.iml
