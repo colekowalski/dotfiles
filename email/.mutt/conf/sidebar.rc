@@ -10,10 +10,9 @@ set sidebar_width = 32
 
 set mail_check_stats
 
-set sidebar_format = '%B%?F? [%F]?%* %?N?%N/?%S'
+set sidebar_format = '%B%?F? [%F]?%* %?N?(%N)?'
 
 # bindings
-bind index \Cn     sidebar-next
-bind index \Ce     sidebar-prev
+bind index \Cj     sidebar-next
+bind index \Ck     sidebar-prev
 bind index \Co     sidebar-open
-
