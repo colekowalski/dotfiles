@@ -85,8 +85,12 @@ let g:scala_sort_across_groups=1
 nmap <leader>gr :Grepper<cr>
 nmap <leader>gw :Grepper -cword<cr>
 
+" fzf
 nnoremap <leader>f :Files<cr>
 nnoremap <leader>b :Buffers<cr>
+
+" ale
+let g:ale_lint_on_text_changed = 0
 
 " airline
 let g:airline_theme='base16_tomorrow'
@@ -111,3 +115,4 @@ endif
 if filereadable('.vimrc.local')
   source .vimrc.local
 endif
+
