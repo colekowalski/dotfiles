@@ -89,18 +89,27 @@ font:
     family: Ubuntu Mono
     # The `style` can be specified to pick a specific face.
     style: Regular
+    render_mode: Max
+    lcd_filter: true
+    antialias: true
 
   # Bold font face
   bold:
     family: Ubuntu Mono
     # The `style` can be specified to pick a specific face.
     style: Bold
+    render_mode: Max
+    lcd_filter: true
+    antialias: true
 
   # Italic font face
   italic:
-    family: monospace
+    family: Ubuntu Mono
     # The `style` can be specified to pick a specific face.
     style: Italic
+    render_mode: Max
+    lcd_filter: true
+    antialias: true
 
   # Point size
   size: 11.0
@@ -117,12 +126,6 @@ font:
   glyph_offset:
     x: 0
     y: 0
-
-  # Scale the font size based on the monitor's DPI. This will lead to bigger text on HiDPI
-  # screens and make reading text a little easier.
-  # On X11 it is possible to change the DPI for each instance of alacritty by using
-  # `WINIT_HIDPI_FACTOR=1.0 alacritty` to scale the font.
-  scale_with_dpi: true
 
 # Display the time it takes to redraw each frame.
 render_timer: false
