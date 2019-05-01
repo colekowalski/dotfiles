@@ -1,0 +1,8 @@
+rofi.modi: combi
+rofi.combi-modi: window,run,drun,ssh
+
+rofi.show-icons: true
+rofi.font: Ubuntu 14
+
+rofi.color-enabled: true
+rofi.theme: ~/.config/rofi/colors-rofi-dark.rasi
