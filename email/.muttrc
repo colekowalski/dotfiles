@@ -18,6 +18,9 @@ set sort_aux = "last-date-received"
 auto_view text/html
 alternative_order text/plain text/enriched text/html *
 
+set query_command = "notmuch address --deduplicate=address --sort=newest-first from:%s"
+set query_format="%4c %t %-70.70a %-70.70n %?e?(%e)?"
+
 set pgp_sign_as = 7847EDF0
 set pgp_use_gpg_agent = yes
 set pgp_timeout = 3600
