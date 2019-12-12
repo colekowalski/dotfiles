@@ -55,7 +55,8 @@ def get_mailboxes(path):
             continue
         mailboxes += get_mailboxes(subdir)
 
-    if is_maildir(subdirs) or len(mailboxes) > 0:
+    # Only include the current path if it is a valid maildir
+    if is_maildir(subdirs):
         mailboxes.append(path)
 
     return mailboxes
