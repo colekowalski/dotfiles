@@ -6,21 +6,18 @@ Plug 'derekwyatt/vim-scala'
 Plug 'fatih/vim-go'
 Plug 'gisraptor/vim-lilypond-integrator'
 Plug 'gre/play2vim'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
+Plug 'junegunn/fzf', { 'dir': '~/.cache/fzf', 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
-Plug 'mhinz/vim-grepper'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'rodjek/vim-puppet'
 Plug 'saltstack/salt-vim'
 Plug 'scrooloose/nerdtree'
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'Shougo/neomru.vim'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'w0rp/ale'
-Plug 'zchee/deoplete-jedi'
 
 call plug#end()
 
@@ -81,16 +78,9 @@ autocmd BufReadPost *
 " sort scala imports into groups
 let g:scala_sort_across_groups=1
 
-" vim-grepper
-nmap <leader>gr :Grepper<cr>
-nmap <leader>gw :Grepper -cword<cr>
-
 " fzf
 nnoremap <leader>f :Files<cr>
 nnoremap <leader>b :Buffers<cr>
-
-" ale
-let g:ale_lint_on_text_changed = 0
 
 " airline
 let g:airline_theme='base16_tomorrow'
@@ -104,7 +94,15 @@ let NERDTreeMinimalUI = 1       " don't display the help line(s)
 autocmd vimenter * wincmd p     " start vim in non-nerdtree buffer
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
-let g:deoplete#enable_at_startup = 1
+" Ripgrep
+"g:rg_derive_root = 1
+
+" COC
+nmap <leader>gd <Plug>(coc-definition)
+nmap <leader>gy <Plug>(coc-type-definition)
+nmap <leader>gi <Plug>(coc-implementation)
+nmap <leader>gr <Plug>(coc-references)
+nnoremap <leader>cr :CocRestart
 
 " source user settings
 if filereadable(expand("~/.vimrc.local"))
