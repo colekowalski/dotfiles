@@ -20,3 +20,6 @@
 ## intellij
 .idea
 *.iml
+
+# vscode
+.vscode
