@@ -190,6 +190,9 @@ bindsym $mod+x mode "$mode_system"
 
 exec_always --no-startup-id $HOME/.config/polybar/start-polybar.sh
 
+exec --nostartup-id nitrogen --restore
+exec --no-startup-id picom --config ~/.config/picom/picom.conf
+
 # apparantly nm-applet is needed to interface with gnome-keyring over dbus.
 # nmcli will not without this running.
 exec --no-startup-id nm-applet
