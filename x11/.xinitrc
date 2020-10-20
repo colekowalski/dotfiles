@@ -32,6 +32,9 @@ dbus-update-activation-environment --systemd --all
 eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
 export SSH_AUTH_SOCK
 
+# Fix some QT applications on hidpi displays
+export QT_AUTO_SCREEN_SCALE_FACTOR=0
+
 # urxvtd -q -f -o
 
 exec i3
