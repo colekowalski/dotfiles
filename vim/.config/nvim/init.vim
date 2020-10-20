@@ -1,14 +1,15 @@
 set nocompatible
 
 call plug#begin('~/.cache/vim/plugged')
-Plug 'chriskempson/base16-vim'
 Plug 'derekwyatt/vim-scala'
 Plug 'fatih/vim-go'
 Plug 'gisraptor/vim-lilypond-integrator'
 Plug 'gre/play2vim'
+Plug 'itchyny/lightline.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.cache/fzf', 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'rakr/vim-one'
 Plug 'rodjek/vim-puppet'
 Plug 'saltstack/salt-vim'
 Plug 'scrooloose/nerdtree'
@@ -16,9 +17,6 @@ Plug 'Shougo/neomru.vim'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-
 call plug#end()
 
 filetype plugin indent on
@@ -27,9 +25,11 @@ let g:python3_host_prog = expand('~/.virtualenvs/neovim/bin/python3')
 
 set t_Co=256
 set background=dark
-let base16colorspace=256
-colorscheme base16-tomorrow-night
+colorscheme one
+set termguicolors
 syntax on
+
+let g:one_allow_italics = 1
 
 let mapleader = ","
 
@@ -56,7 +56,7 @@ set ruler                       " show the cursor position
 set showcmd                     " display imcomplete commands
 set showmode                    " display the mode we are in
 
-set nocursorline                " highlight current line
+set cursorline                " highlight current line
 set nocursorcolumn              " highlight current column
 
 set nobackup                    " don't create backup files
@@ -82,10 +82,9 @@ let g:scala_sort_across_groups=1
 nnoremap <leader>f :Files<cr>
 nnoremap <leader>b :Buffers<cr>
 
-" airline
-let g:airline_theme='base16_tomorrow'
-let g:airline_powerline_fonts=1
-set laststatus=2
+let g:lightline = {
+  \ 'colorscheme': 'one'
+  \ }
 
 " NERDTree stuff...
 map <leader>t :NERDTreeToggle<cr>
