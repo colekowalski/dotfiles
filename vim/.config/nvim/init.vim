@@ -5,11 +5,11 @@ Plug 'derekwyatt/vim-scala'
 Plug 'fatih/vim-go'
 Plug 'gisraptor/vim-lilypond-integrator'
 Plug 'gre/play2vim'
+Plug 'gruvbox-community/gruvbox'
 Plug 'itchyny/lightline.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.cache/fzf', 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'rakr/vim-one'
 Plug 'rodjek/vim-puppet'
 Plug 'saltstack/salt-vim'
 Plug 'scrooloose/nerdtree'
@@ -23,13 +23,12 @@ filetype plugin indent on
 
 let g:python3_host_prog = expand('~/.virtualenvs/neovim/bin/python3')
 
+let g:gruvbox_contrast_dark = 'hard'
+
 set t_Co=256
 set background=dark
-colorscheme one
-set termguicolors
+colorscheme gruvbox
 syntax on
-
-let g:one_allow_italics = 1
 
 let mapleader = ","
 
