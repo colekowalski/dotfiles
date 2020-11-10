@@ -28,6 +28,9 @@
 [push]
   default = tracking
 
+[pull]
+  rebase = false
+
 [include]
   path = .gitconfig.local
 
