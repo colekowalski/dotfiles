@@ -39,6 +39,3 @@ source ~/.mutt/conf/sidebar.rc
 
 mailboxes `python ~/.mutt/mailboxes.py`
 
-folder-hook disqus/* source ~/.mutt/accounts/disqus
-folder-hook northernbloc/* source ~/.mutt/accounts/northernbloc
-folder-hook zeta/* source ~/.mutt/accounts/zeta
