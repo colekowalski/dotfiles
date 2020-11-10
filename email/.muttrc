@@ -1,16 +1,56 @@
 set realname = "Cole Kowalski"
+set from = "cole@northernbloc.org"
 
-set folder = ~/.mail
-set spoolfile = "+northernbloc/Inbox"
+set folder = ~/.mail/northernbloc
+
+set spoolfile = "+Inbox"
+set postponed = "+Drafts"
+set record = "+Sent"
+set trash = "+Trash"
 set mbox_type = Maildir
+
+set sendmail = "msmtp -a northernbloc"
+
 set timeout = 3
 set mail_check = 1
 
 set header_cache = ~/.cache/mutt/headers
 set message_cachedir = ~/.cache/mutt/bodies
 
+# Skip to compose when replying
+set fast_reply
+
+# Subject format when forwarding
+set forward_format = "Fwd: %s"
+
+# Decode when forwarding
+set forward_decode
+
+# Reply to Reply to: field
+set reply_to
+
+# Reply as whomever it was to
+set reverse_name
+
+# Include message in replies
+set include
+
+# Include message in forwards
+set forward_quote
+
 set smart_wrap
-set markers = no # no + on wrapped lines
+
+# no + on wrapped lines
+set markers = no
+
+# Enable text_flowed formatting
+set text_flowed
+
+# Pad the bottom of the pager with tildes (ala vim)
+set tilde
+
+# Don't mark messages as "old" if they're still unread
+set mark_old = no
 
 set sort = "threads"
 set sort_aux = "last-date-received"
@@ -21,7 +61,7 @@ alternative_order text/plain text/enriched text/html *
 set query_command = "notmuch address --deduplicate=address --sort=newest-first from:%s"
 set query_format="%4c %t %-70.70a %-70.70n %?e?(%e)?"
 
-set pgp_sign_as = 7847EDF0
+set pgp_sign_as = F9DFACC65F7ADCB5
 set pgp_use_gpg_agent = yes
 set pgp_timeout = 3600
 set crypt_autosign = yes
@@ -36,6 +76,8 @@ source ~/.mutt/conf/headers.rc
 source ~/.mutt/conf/gpg.rc
 source ~/.mutt/conf/colors.rc
 source ~/.mutt/conf/sidebar.rc
+
+set nm_default_uri = "notmuch:///home/cole/.mail/"
 
 mailboxes `python ~/.mutt/mailboxes.py`
 

@@ -1,5 +1,5 @@
 text/html; elinks -dump ; copiousoutput;
-application/pdf; evince %s
+application/pdf; okular %s
 image/jpg; feh %s
 image/jpeg; feh %s
 image/gif; feh %s
