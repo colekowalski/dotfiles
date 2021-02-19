@@ -12,6 +12,7 @@
   oldbranches = for-each-ref --sort=committerdate --format='%(committerdate:short) %(refname:short)' refs/heads/
   st = status
   wdiff = diff --color-words
+  changed = diff --name-status
 
 [color]
   branch = auto
@@ -24,6 +25,9 @@
 
 [core]
   excludesfile = ~/.config/git/gitignore
+
+[fetch]
+  prune = true
 
 [push]
   default = tracking

@@ -4,6 +4,8 @@ mutt/mailboxes
 sbt/boot
 sbt/**/target
 
+vim/.config/nvim/autoload/plug.vim.old
+
 config/systemd/user/*.wants
 
 karabiner.d/log
