@@ -1,8 +1,5 @@
 ## make sure local bin dir is on the path
-[ -d $HOME/bin ] && export PATH=$HOME/bin:$PATH
-
-# Enable more syntax highlighting
-ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
+[ -d $HOME/.bin ] && export PATH=$HOME/.bin:$PATH
 
 # Load base16 shell configuration
 if ! remote_connection; then
