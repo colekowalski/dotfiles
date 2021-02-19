@@ -33,12 +33,12 @@ user_pref("beacon.enabled", false);
 // Disable clipboard event detection (onCut/onCopy/onPaste) via Javascript
 // NOTICE: Disabling clipboard events breaks Ctrl+C/X/V copy/cut/paste functionaility in JS-based web applications (Google Docs...)
 // https://developer.mozilla.org/en-US/docs/Mozilla/Preferences/Preference_reference/dom.event.clipboardevents.enabled
-user_pref("dom.event.clipboardevents.enabled", false);
+user_pref("dom.event.clipboardevents.enabled", true);
 
 // Disable "copy to clipboard" functionality via Javascript (Firefox >= 41)
 // NOTICE: Disabling clipboard operations will break legitimate JS-based "copy to clipboard" functionality
 // https://hg.mozilla.org/mozilla-central/rev/2f9f8ea4b9c3
-user_pref("dom.allow_cut_copy", false);
+user_pref("dom.allow_cut_copy", true);
 
 // Disable sensor API
 // https://wiki.mozilla.org/Sensor_API
@@ -75,6 +75,17 @@ user_pref("dom.ipc.plugins.flash.subprocess.crashreporter.enabled", false);
 // Updates addons automatically
 // https://blog.mozilla.org/addons/how-to-turn-off-add-on-updates/
 user_pref("extensions.update.enabled", true);
+
+// PREF: Disable raw TCP socket support (mozTCPSocket)
+// https://trac.torproject.org/projects/tor/ticket/18863
+// https://www.mozilla.org/en-US/security/advisories/mfsa2015-97/
+// https://developer.mozilla.org/docs/Mozilla/B2G_OS/API/TCPSocket
+user_pref("dom.mozTCPSocket.enabled",	false);
+
+// PREF: Don't reveal your internal IP when WebRTC is enabled (Firefox >= 42)
+// https://wiki.mozilla.org/Media/WebRTC/Privacy
+// https://github.com/beefproject/beef/wiki/Module%3A-Get-Internal-IP-WebRTC
+user_pref("media.peerconnection.ice.no_host",	true); // Firefox >= 52
 
 // Enable add-on and certificate blocklists (OneCRL) from Mozilla
 // https://wiki.mozilla.org/Blocklisting
@@ -148,7 +159,7 @@ user_pref("network.allow-experiments", false);
 // https://dxr.mozilla.org/mozilla-central/source/toolkit/crashreporter
 // https://bugzilla.mozilla.org/show_bug.cgi?id=411490
 // A list of submitted crash reports can be found at about:crashes
-user_pref("breakpad.reportURL",					"");
+user_pref("breakpad.reportURL",	"");
 
 // Disable sending reports of tab crashes to Mozilla (about:tabcrashed), don't nag user about unsent crash reports
 // https://hg.mozilla.org/mozilla-central/file/tip/browser/app/profile/firefox.js
@@ -172,8 +183,8 @@ user_pref("browser.uitour.enabled", false);
 // https://support.mozilla.org/en-US/kb/tracking-protection-pbm
 // https://kontaxis.github.io/trackingprotectionfirefox/
 // https://feeding.cloud.geek.nz/posts/how-tracking-protection-works-in-firefox/
-user_pref("privacy.trackingprotection.enabled",			true);
-user_pref("privacy.trackingprotection.pbmode.enabled",		true);
+user_pref("privacy.trackingprotection.enabled",	true);
+user_pref("privacy.trackingprotection.pbmode.enabled", true);
 
 // Enable contextual identity Containers feature (Firefox >= 52)
 // NOTICE: Containers are not available in Private Browsing mode
@@ -185,7 +196,7 @@ user_pref("privacy.userContext.enabled", true);
 // https://bugzilla.mozilla.org/show_bug.cgi?id=1333933
 // https://wiki.mozilla.org/Security/Fingerprinting
 // NOTICE: RFP breaks some keyboard shortcuts used in certain websites (see #443)
-user_pref("privacy.resistFingerprinting", true);
+user_pref("privacy.resistFingerprinting", false);
 
 // Disable collection/sending of the health report (healthreport.sqlite*)
 // https://support.mozilla.org/en-US/kb/firefox-health-report-understand-your-browser-perf
