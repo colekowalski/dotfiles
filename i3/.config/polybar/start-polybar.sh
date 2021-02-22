@@ -9,7 +9,7 @@ if pgrep -u $UID -x polybar > /dev/null; then
   while pgrep -u "${UID}" -x polybar > /dev/null; do
     # if polybar has taken more than 5 seconds to shutdown, take more drastic
     # action
-    if [ "${count}" > 5 ]; then
+    if [ "${count}" -gt 5 ]; then
       killall -q -u "${USER}" -9 polybar
       break
     fi
