@@ -11,5 +11,10 @@ fi
 autoload -U select-word-style
 select-word-style bash
 
+# Edit command line in the default text editor
+autoload -z edit-command-line
+zle -N edit-command-line
+bindkey "^X^E" edit-command-line
+
 ## emacs mode
 bindkey -e
