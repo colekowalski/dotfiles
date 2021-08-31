@@ -1,0 +1,7 @@
+configuration {
+	modi: "combi";
+	font: "Ubuntu 14";
+	show-icons: true;
+	combi-modi: "window,run,drun,ssh";
+	theme: "~/.config/rofi/colors-rofi-dark.rasi";
+}
