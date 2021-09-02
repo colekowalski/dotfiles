@@ -1,4 +1,13 @@
 {
-    "python.jediEnabled": false,
-    "python.linting.flake8Enabled": true
+  "coc.source.file.ignorePatterns": [
+    "**/node_modules/"
+  ],
+  "languageserver": {
+    "terraform": {
+      "command": "terraform-lsp",
+      "filetypes": ["terraform", "tf", "tfvars"],
+      "initializationOptions": {}
+    }
+  },
+  "python.linting.mypyEnabled": true
 }

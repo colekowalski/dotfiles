@@ -5,11 +5,12 @@ Plug 'derekwyatt/vim-scala'
 Plug 'fatih/vim-go'
 Plug 'gisraptor/vim-lilypond-integrator'
 Plug 'gre/play2vim'
-Plug 'gruvbox-community/gruvbox'
 Plug 'itchyny/lightline.vim'
+Plug 'josa42/vim-lightline-coc'
 Plug 'junegunn/fzf', { 'dir': '~/.cache/fzf', 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'rakr/vim-one'
 Plug 'rodjek/vim-puppet'
 Plug 'saltstack/salt-vim'
 Plug 'scrooloose/nerdtree'
@@ -23,11 +24,13 @@ filetype plugin indent on
 
 let g:python3_host_prog = expand('~/.virtualenvs/neovim/bin/python3')
 
-let g:gruvbox_contrast_dark = 'hard'
+if !has('gui_running')
+  set t_Co=256
+endif
 
-set t_Co=256
+set termguicolors
 set background=dark
-colorscheme gruvbox
+colorscheme one
 syntax on
 
 let mapleader = ","
@@ -82,8 +85,21 @@ nnoremap <leader>f :Files<cr>
 nnoremap <leader>b :Buffers<cr>
 
 let g:lightline = {
-  \ 'colorscheme': 'one'
+  \   'colorscheme': 'one',
+  \   'active': {
+  \     'left': [
+  \       [ 'mode', 'paste' ],
+  \       [ 'coc_errors', 'coc_warnings', 'coc_ok' ],
+  \       [ 'coc_status' ],
+  \       [ 'gitbranch', 'readonly', 'filename', 'modified' ]
+  \     ]
+  \   },
+  \   'component_function': {
+  \     'gitbranch': 'FugitiveHead'
+  \   }
   \ }
+
+call lightline#coc#register()
 
 " NERDTree stuff...
 map <leader>t :NERDTreeToggle<cr>
