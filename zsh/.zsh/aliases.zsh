@@ -9,3 +9,6 @@ case $OSTYPE in
         alias ll="ls -Alh --group-directories-first"
         ;;
 esac
+
+alias lc="tr 'A-Z' 'a-z'"
+alias uc="tr 'a-z' 'A-Z'"
