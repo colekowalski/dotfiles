@@ -4,7 +4,7 @@
 export TERMINAL="alacritty"
 
 # Kill X with C-A-BS
-setxkbmap -option terminate:ctrl_alt_bksp
+#setxkbmap -option terminate:ctrl_alt_bksp
 
 if [ -e $HOME/.Xresources ]; then
     xrdb -merge ~/.Xresources
