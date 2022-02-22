@@ -3,5 +3,6 @@ configuration {
 	font: "Ubuntu 14";
 	show-icons: true;
 	combi-modi: "window,run,drun,ssh";
-	theme: "~/.config/rofi/colors-one-dark.rasi";
 }
+
+@theme "~/.config/rofi/colors-one-dark.rasi"
