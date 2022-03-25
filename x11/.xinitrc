@@ -18,6 +18,9 @@ if [ -e $HOME/.xmodmap ]; then
     xmodmap ~/.xmodmap
 fi
 
+# default cursor
+xsetroot -cursor_name left_ptr
+
 # Source any local confiurations
 # This is useful for system-specific settings such as the display configuration
 # for a particular machine's monitors
@@ -37,4 +40,9 @@ export QT_AUTO_SCREEN_SCALE_FACTOR=0
 
 # urxvtd -q -f -o
 
-exec i3
+/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 --no-debug &
+
+xscreensaver -no-splash &
+
+#exec i3
+exec xmonad

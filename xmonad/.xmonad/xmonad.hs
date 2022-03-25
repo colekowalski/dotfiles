@@ -1,68 +1,146 @@
 import XMonad
-import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.DynamicLog
-import XMonad.Hooks.SetWMName
-import XMonad.Layout.NoBorders (smartBorders)
-import XMonad.Util.Run (spawnPipe)
-import System.IO (hPutStrLn)
+import XMonad.Hooks.EwmhDesktops
+import XMonad.Hooks.ManageDocks
+import XMonad.Hooks.ManageHelpers
+import XMonad.Hooks.UrgencyHook
+import XMonad.Layout.Grid
+import XMonad.Layout.NoBorders
+import XMonad.Layout.Renamed
+import XMonad.Layout.ResizableTile
+import XMonad.Layout.Tabbed
+import XMonad.Util.NamedScratchpad
+import XMonad.Util.SpawnOnce
+import XMonad.Util.Replace
+import XMonad.Util.Run (hPutStrLn, spawnPipe)
 
+import Data.Monoid
+import System.Exit
+
+import qualified XMonad.StackSet as W
 import qualified Data.Map as M
 
-myDzenBar = "dzen2 -ta 'l' -xs 1 -w '840' -h 20 -fg '#ffffff' -bg '#1b1d1e'"
-myConkyBar = "conky -c /home/cole/.xmonad/conky_dzen.conf | dzen2 -x '840' -w '740' -h 20 -ta 'r' -xs 1 -fg '#ffffff' -bg '#1b1d1e'"
-myTrayer = "trayer --edge top --align right --SetDockType true --SetPartialStrut true --expand true --transparent true --tint 0x222222 --alpha 0 --height 20 --width 100 --widthtype pixel --monitor primary"
+myWorkspaces :: [WorkspaceId]
+myWorkspaces = map show $ [1 .. 10 :: Int]
 
-myDzenPP  = dzenPP
-  { ppCurrent = dzenColor "#3399ff" "" . wrap " " " "
-  , ppHidden  = dzenColor "#dddddd" "" . wrap " " " "
-  , ppHiddenNoWindows = dzenColor "#777777" "" . wrap " " " "
-  , ppUrgent  = dzenColor "#ff0000" "" . wrap " " " "
-  , ppSep     = " // "
-  , ppLayout  = \y -> ""
-  , ppTitle   = dzenColor "#ffffff" "" . wrap " " " "
-  }
+-- lessBorders OtherIndicated - No borders on full when all other screens
+-- have borders. This seems like a resonable tradeoff
+myLayout = avoidStruts $ lessBorders OtherIndicated (tiled ||| mirrorTiled ||| Grid ||| noBorders tabs)
+  where
+    tiled = renamed [Replace "tall"] $ ResizableTall 1 (3/100) (1/2) []
+    mirrorTiled = renamed [Replace "mirror tall"] $ Mirror tiled
+    tabs = renamed [Replace "tabs"] $ tabbed shrinkText myTabConfig
+    myTabConfig = def { inactiveBorderColor = "#000000"
+                      , activeTextColor = "#000000"
+                      }
 
-myLogHook h = dynamicLogWithPP $ myDzenPP { ppOutput = hPutStrLn h }
+myScratchpads :: [NamedScratchpad]
+myScratchpads = [ NS "slack" "slack" (appName =? "slack") (customFloating $ W.RationalRect (1/6) (1/6) (2/3) (2/3))
+                , NS "htop" "alacritty --class htop -e htop" (title =? "htop") defaultFloating
+                ]
 
-main = do
-  dzenLeftBar <- spawnPipe myDzenBar
-  dzenRightBar <- spawnPipe myConkyBar
-  spawn myTrayer
-  xmonad $ defaultConfig
-    { terminal = "gnome-terminal"
-    , modMask  = mod4Mask
-    , keys = newKeys
-    , workspaces = myWorkspaces
-    , logHook = myLogHook dzenLeftBar
-    , manageHook = manageDocks <+> myManageHook <+> manageHook defaultConfig
-    , layoutHook = avoidStruts $ smartBorders $ layoutHook defaultConfig
-    , borderWidth = 1
-    , normalBorderColor = "#000000"
-    , focusedBorderColor = "#535d6c"
-    , startupHook = setWMName "LG3D"
-    }
 
-myWorkspaces = ["1:mail", "2:im", "3:web"] ++ map show [4..9]
+-- These are mostly lifted directly from the default keybindings defined in
+-- Config.hs, with some modifications and additions
+-- See: https://github.com/xmonad/xmonad/blob/master/src/XMonad/Config.hs
+myKeys :: XConfig Layout -> M.Map (KeyMask, KeySym) (X ())
+myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
+    [ ((modMask,               xK_Return), spawn $ XMonad.terminal conf) -- %! Launch terminal
+    , ((modMask .|. shiftMask, xK_c), kill) -- %! Close the focused window
 
+    , ((modMask,               xK_space), sendMessage NextLayout) -- %! Rotate through the available layout algorithms
+    , ((modMask .|. shiftMask, xK_space), setLayout $ XMonad.layoutHook conf) -- %!  Reset the layouts on the current workspace to default
+
+    , ((modMask,               xK_n), refresh) -- %! Resize viewed windows to the correct size
+
+    -- move focus up or down the window stack
+    , ((modMask,               xK_j), windows W.focusDown) -- %! Move focus to the next window
+    , ((modMask,               xK_k), windows W.focusUp) -- %! Move focus to the previous window
+    , ((modMask,               xK_m), windows W.focusMaster  ) -- %! Move focus to the master window
+
+    -- modifying the window order
+    , ((modMask .|. shiftMask, xK_Return), windows W.swapMaster) -- %! Swap the focused window and the master window
+    , ((modMask .|. shiftMask, xK_j), windows W.swapDown) -- %! Swap the focused window with the next window
+    , ((modMask .|. shiftMask, xK_k), windows W.swapUp) -- %! Swap the focused window with the previous window
+
+    -- resizing the master/slave ratio
+    , ((modMask .|. shiftMask, xK_h), sendMessage Shrink) -- %! Shrink the master area
+    , ((modMask .|. shiftMask, xK_l), sendMessage Expand) -- %! Expand the master area
+
+    -- floating layer support
+    , ((modMask,               xK_t), withFocused toggleFloat)
+
+    -- increase or decrease number of windows in the master area
+    , ((modMask              , xK_comma), sendMessage (IncMasterN 1)) -- %! Increment the number of windows in the master area
+    , ((modMask              , xK_period), sendMessage (IncMasterN (-1))) -- %! Deincrement the number of windows in the master area
+
+    -- quit, or restart
+    , ((modMask .|. shiftMask, xK_q), io (exitWith ExitSuccess)) -- %! Quit xmonad
+    , ((modMask              , xK_q), spawn "if type xmonad; then xmonad --recompile && xmonad --restart; else xmessage xmonad not in \\$PATH: \"$PATH\"; fi") -- %! Restart xmonad
+
+    -- Scratchpads
+    , ((modMask              , xK_minus), namedScratchpadAction myScratchpads "slack")
+    , ((modMask .|. shiftMask, xK_g), namedScratchpadAction myScratchpads "htop")
+
+    , ((modMask              , xK_s), spawn "rofi -show combi")
+    , ((modMask .|. controlMask, xK_l), spawn "xscreensaver-command -lock")
+
+    -- handle workspace 10
+    , ((modMask              , xK_0), windows $ W.greedyView "10")
+    , ((modMask .|. shiftMask, xK_0), windows $ W.shift "10")
+    ]
+    ++
+    -- mod-[1..9] %! Switch to workspace N
+    -- mod-shift-[1..9] %! Move client to workspace N
+    [((m .|. modMask, k), windows $ f i)
+        | (i, k) <- zip (XMonad.workspaces conf) [xK_1 .. xK_9]
+        , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]]
+    ++
+    -- mod-{w,e,r} %! Switch to physical/Xinerama screens 1, 2, or 3
+    -- mod-shift-{w,e,r} %! Move client to screen 1, 2, or 3
+    [((m .|. modMask, key), screenWorkspace sc >>= flip whenJust (windows . f))
+        | (key, sc) <- zip [xK_w, xK_e, xK_r] [0..]
+        , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
+
+    where
+      toggleFloat w = windows (\s -> if M.member w (W.floating s)
+                      then W.sink w s
+                      else (W.float w (W.RationalRect (1/4) (1/6) (1/2) (2/3)) s))
+
+
+myManageHook :: XMonad.Query (Data.Monoid.Endo WindowSet)
 myManageHook = composeAll
-  [ (className =? "Pidgin"     --> doShift "2:im")
-  , (className =? "Chromium"   --> doShift "3:web")
-  , (className =? "Firefox"   --> doShift "3:web")
-  , (className =? "VirtualBox" --> doFloat)
-  , (className =? "qemu-system-x86_64" --> doFloat)
-  , (className =? "Vlc"        --> doFloat)
+  [ isFullscreen --> doFullFloat
   ]
 
-newKeys x = myKeys x `M.union` keys defaultConfig x
-myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList
-  [ ((modm, xK_p),    spawn "pidgin")
-  , ((modm, xK_c),    spawn "chromium")
-  , ((modm, xK_b),    spawn "firefox")
-  , ((modm, xK_m),    spawn "vlc")
-  , ((modm, xK_o),    spawn "okular")
-  , ((modm, xK_Return), spawn "gnome-terminal")
-  , ((modm .|. shiftMask, xK_e), spawn "emacsclient -c -n")
-  , ((0, 0x1008ff13), spawn "amixer -q set Master 2+")
-  , ((0, 0x1008ff11), spawn "amixer -q set Master 2-")
-  , ((0, 0x1008ff12), spawn "amixer -q set Master toggle")
-  ]
+
+myStartupHook :: X ()
+myStartupHook = do
+  spawn "killall trayer"
+  spawnOnce "picom"
+  spawnOnce "nm-applet"
+  spawn ("sleep 2 && trayer --edge top --align right --widthtype request --margin 2 --padding 2 --SetDockType true --SetPartialStrut true --expand true --monitor 0 --tint 0x222000 --transparent true --alpha 0 --height 22")
+
+
+main :: IO ()
+main = do
+    xmproc <- spawnPipe ("xmobar -x 0")
+    xmonad $ ewmh $ withUrgencyHook NoUrgencyHook $ docks def
+        { modMask = mod4Mask
+        , focusFollowsMouse = False
+        , keys = myKeys
+        , workspaces = myWorkspaces
+        , startupHook = myStartupHook
+        , layoutHook = myLayout
+        , manageHook = manageHook def <+> manageDocks <+> namedScratchpadManageHook myScratchpads <+> myManageHook
+        , handleEventHook = handleEventHook def <+> fullscreenEventHook
+        , logHook = dynamicLogWithPP $ namedScratchpadFilterOutWorkspacePP $ xmobarPP
+              { ppOutput = hPutStrLn xmproc
+              , ppCurrent = xmobarColor "#389dff" "" . wrap ("<box type=Bottom width=2 mb=1 mt=1 color=#0078c6>") "</box>"
+              , ppVisibleNoWindows = Just (xmobarColor "yellow" "" . wrap "" "")
+              , ppTitle = xmobarColor "gray" "" . shorten 48
+              , ppUrgent = xmobarColor "#990000" "" . wrap "*" "*"
+              }
+        , borderWidth = 1
+        , terminal = "alacritty"
+        }
