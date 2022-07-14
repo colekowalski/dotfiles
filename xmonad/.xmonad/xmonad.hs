@@ -3,6 +3,8 @@ import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
+import XMonad.Hooks.StatusBar
+import XMonad.Hooks.StatusBar.PP
 import XMonad.Hooks.UrgencyHook
 import XMonad.Layout.Grid
 import XMonad.Layout.NoBorders
@@ -119,13 +121,14 @@ myStartupHook = do
   spawn "killall trayer"
   spawnOnce "picom"
   spawnOnce "nm-applet"
-  spawn ("sleep 2 && trayer --edge top --align right --widthtype request --margin 2 --padding 2 --SetDockType true --SetPartialStrut true --expand true --monitor 0 --tint 0x222000 --transparent true --alpha 0 --height 22")
+  spawn ("sleep 2 && trayer --edge top --align right --widthtype request --margin 2 --padding 2 --iconspacing 5 --SetDockType true --SetPartialStrut true --expand true --monitor 0 --tint 0x222000 --transparent true --alpha 0 --height 18 --distance 6")
+  spawn "nitrogen --restore"
 
 
 main :: IO ()
 main = do
     xmproc <- spawnPipe ("xmobar -x 0")
-    xmonad $ ewmh $ withUrgencyHook NoUrgencyHook $ docks def
+    xmonad $ ewmhFullscreen $ withUrgencyHook NoUrgencyHook $ docks $ ewmh def
         { modMask = mod4Mask
         , focusFollowsMouse = False
         , keys = myKeys
@@ -133,8 +136,8 @@ main = do
         , startupHook = myStartupHook
         , layoutHook = myLayout
         , manageHook = manageHook def <+> manageDocks <+> namedScratchpadManageHook myScratchpads <+> myManageHook
-        , handleEventHook = handleEventHook def <+> fullscreenEventHook
-        , logHook = dynamicLogWithPP $ namedScratchpadFilterOutWorkspacePP $ xmobarPP
+        , handleEventHook = handleEventHook def
+        , logHook = dynamicLogWithPP $ filterOutWsPP [scratchpadWorkspaceTag] $ xmobarPP
               { ppOutput = hPutStrLn xmproc
               , ppCurrent = xmobarColor "#389dff" "" . wrap ("<box type=Bottom width=2 mb=1 mt=1 color=#0078c6>") "</box>"
               , ppVisibleNoWindows = Just (xmobarColor "yellow" "" . wrap "" "")
