@@ -2,6 +2,18 @@
   "coc.source.file.ignorePatterns": [
     "**/node_modules/"
   ],
+  "coc.preferences.formatOnSaveFiletypes": [
+    "css",
+    "json",
+    "javascript",
+    "markdown",
+    "python",
+    "ruby",
+    "rust",
+    "scss",
+    "typescript",
+    "yaml"
+  ],
   "languageserver": {
     "terraform": {
       "command": "terraform-lsp",
@@ -9,5 +21,8 @@
       "initializationOptions": {}
     }
   },
-  "python.linting.mypyEnabled": true
+  "python.linting.mypyEnabled": true,
+  "rust-analyzer.checkOnSave.command": "clippy",
+  "rust-analyzer.lens.methodReferences": true
+
 }
