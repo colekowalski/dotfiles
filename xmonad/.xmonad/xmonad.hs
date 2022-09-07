@@ -6,6 +6,7 @@ import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.StatusBar
 import XMonad.Hooks.StatusBar.PP
 import XMonad.Hooks.UrgencyHook
+import XMonad.Hooks.WindowSwallowing
 import XMonad.Layout.Grid
 import XMonad.Layout.NoBorders
 import XMonad.Layout.Renamed
@@ -136,7 +137,7 @@ main = do
         , startupHook = myStartupHook
         , layoutHook = myLayout
         , manageHook = manageHook def <+> manageDocks <+> namedScratchpadManageHook myScratchpads <+> myManageHook
-        , handleEventHook = handleEventHook def
+        , handleEventHook = handleEventHook def <+> swallowEventHook (className =? "Alacritty" <||> className =? "URxvt") (return True)
         , logHook = dynamicLogWithPP $ filterOutWsPP [scratchpadWorkspaceTag] $ xmobarPP
               { ppOutput = hPutStrLn xmproc
               , ppCurrent = xmobarColor "#389dff" "" . wrap ("<box type=Bottom width=2 mb=1 mt=1 color=#0078c6>") "</box>"
