@@ -32,3 +32,9 @@ opt.softtabstop = 2
 opt.shiftwidth = 2
 opt.shiftround = true
 opt.smartindent = true
+
+-- Exit paste mode when leaving exiting insert mode
+vim.api.nvim_create_autocmd("InsertLeave", {
+  pattern = '*',
+  command = "set nopaste"
+})

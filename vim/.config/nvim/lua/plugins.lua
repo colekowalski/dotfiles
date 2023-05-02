@@ -6,6 +6,7 @@ return require('packer').startup(function(use)
   use 'fatih/vim-go'
   use 'gisraptor/vim-lilypond-integrator'
   use 'gre/play2vim'
+  use 'hashivim/vim-terraform'
   use {
     'hrsh7th/nvim-cmp',
     requires = {
@@ -17,6 +18,7 @@ return require('packer').startup(function(use)
     }
   }
   use 'kyazdani42/nvim-web-devicons'
+  use 'kylechui/nvim-surround'
   use 'neovim/nvim-lspconfig'
   use 'nvim-lua/plenary.nvim'
   use 'nvim-lualine/lualine.nvim'
@@ -28,5 +30,4 @@ return require('packer').startup(function(use)
   --use 'Shougo/neomru.vim'
   use 'tpope/vim-commentary'
   use 'tpope/vim-fugitive'
-  use 'tpope/vim-surround'
 end)
