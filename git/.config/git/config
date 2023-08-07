@@ -40,3 +40,21 @@
 
 [github]
   user = colekowalski
+
+[includeIf "gitdir:~/dev/disqus/"]
+    path = ~/.config/git/config.zeta
+
+[includeIf "gitdir:~/dev/_zeta/"]
+    path = ~/.config/git/config.zeta
+
+[merge]
+  tool = kdiff3
+
+[mergetool "kdiff3"]
+  path = /usr/bin/kdiff3
+
+[diff]
+  guitool = kdiff3
+
+[difftool "kdiff3"]
+  path = /usr/bin/kdiff3

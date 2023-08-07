@@ -1,0 +1,13 @@
+[user]
+  email = ckowalski@zetaglobal.com
+
+[alias]
+  # Create a merge request in gitlab
+  # See: https://docs.gitlab.com/ee/user/project/push_options.html
+  mr = "!git push -u -o merge_request.create -o merge_request.remove_source_branch -o merge_request.assign=ckowalski origin $(git rev-parse --abbrev-ref HEAD)"
+
+[commit]
+  gpgsign = false
+
+[url "ssh://git@git.infr.zglbl.net/"]
+  instreadOf = "https://git.infr.zglbl.net/"

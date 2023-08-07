@@ -5,8 +5,8 @@ case $OSTYPE in
     ;;
 
     linux-gnu)
-        alias ls="ls --color"
-        alias ll="ls -Alh --group-directories-first"
+        alias ls="ls -N --group-directories-first --color"
+        alias ll="ls -N -Alh --group-directories-first"
         ;;
 esac
 

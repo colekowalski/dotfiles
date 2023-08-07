@@ -17,3 +17,4 @@ autoload -Uz compinit
 compinit -i
 
 [ -f $HOME/.zshrc.local ] && source $HOME/.zshrc.local
+

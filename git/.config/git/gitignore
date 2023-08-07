@@ -17,6 +17,7 @@
 # emacs project-local stuff
 .projectile
 .dir-locals.el
+.dir-local.el
 
 ## intellij
 .idea

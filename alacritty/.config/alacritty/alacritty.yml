@@ -75,7 +75,7 @@ scrolling:
 font:
   # Normal (roman) font face
   normal:
-    family: Ubuntu Mono
+    family: Ubuntu Mono Nerd Font
     # The `style` can be specified to pick a specific face.
     style: Regular
     render_mode: Max
@@ -84,7 +84,7 @@ font:
 
   # Bold font face
   bold:
-    family: Ubuntu Mono
+    family: Ubuntu Mono Nerd Font
     # The `style` can be specified to pick a specific face.
     style: Bold
     render_mode: Max
@@ -93,7 +93,7 @@ font:
 
   # Italic font face
   italic:
-    family: Ubuntu Mono
+    family: Ubuntu Mono Nerd Font
     # The `style` can be specified to pick a specific face.
     style: Italic
     render_mode: Max

@@ -73,7 +73,6 @@ macro index,pager \cb "<pipe-message> urlscan<Enter>"
 macro attach,compose \cb "<pipe-entry> urlscan<Enter>"
 
 source ~/.mutt/conf/headers.rc
-source ~/.mutt/conf/gpg.rc
 source ~/.mutt/conf/colors.rc
 source ~/.mutt/conf/sidebar.rc
 
@@ -81,3 +80,6 @@ set nm_default_uri = "notmuch:///home/cole/.mail/"
 
 mailboxes `python ~/.mutt/mailboxes.py`
 
+# Disable exit on the index to prevent accidentally exiting mutt, which I do
+# all the time
+bind index x noop
