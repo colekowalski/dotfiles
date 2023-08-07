@@ -1,7 +1,7 @@
 return require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
 
-  use 'arcticicestudio/nord-vim'
+  --use 'arcticicestudio/nord-vim'
   use 'derekwyatt/vim-scala'
   use 'fatih/vim-go'
   use 'gisraptor/vim-lilypond-integrator'
@@ -17,8 +17,10 @@ return require('packer').startup(function(use)
       'ray-x/cmp-treesitter',
     }
   }
+  -- use 'karoliskoncevicius/distilled-vim'
   use 'kyazdani42/nvim-web-devicons'
   use 'kylechui/nvim-surround'
+  use 'navarasu/onedark.nvim'
   use 'neovim/nvim-lspconfig'
   use 'nvim-lua/plenary.nvim'
   use 'nvim-lualine/lualine.nvim'

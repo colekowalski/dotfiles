@@ -13,8 +13,6 @@ opt.scrolloff = 8                 -- more context around the cursor
 opt.sidescrolloff = 8
 
 opt.number = true                 -- show line numbers.
-opt.ruler = true                  -- show cursor position.
-opt.cursorline = true             -- show cursor position.
 
 opt.ignorecase = true             -- case-insensitive searching.
 opt.smartcase = true              -- case-sensitive searching if expression contains a capital letter.

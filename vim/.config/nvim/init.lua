@@ -2,9 +2,10 @@ require('plugins')
 require('settings')
 require('lsp')
 
-vim.opt.termguicolors = true
-vim.opt.background = 'dark'
-vim.cmd [[colorscheme nord]]
+require('onedark').setup {
+  style = 'darker'
+}
+require('onedark').load()
 
 -- Telescope
 local builtin = require('telescope.builtin')
@@ -19,7 +20,7 @@ vim.keymap.set("n", "<space>s", builtin.lsp_dynamic_workspace_symbols)
 vim.keymap.set("n", "<space>d", builtin.diagnostics)
 
 require('lualine').setup {
-  options = { theme = 'nord' },
+  -- options = { theme = 'nord' },
   sections = {
     lualine_c = {{ 'filename', path = 3 }},
   }
