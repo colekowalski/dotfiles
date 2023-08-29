@@ -5,6 +5,7 @@ return require('packer').startup(function(use)
   use 'derekwyatt/vim-scala'
   use 'fatih/vim-go'
   use 'gisraptor/vim-lilypond-integrator'
+  use 'github/copilot.vim'
   use 'gre/play2vim'
   use 'hashivim/vim-terraform'
   use {
@@ -26,10 +27,8 @@ return require('packer').startup(function(use)
   use 'nvim-lualine/lualine.nvim'
   use 'nvim-telescope/telescope.nvim'
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
+  use 'numToStr/Comment.nvim'
   use 'rodjek/vim-puppet'
   use 'saltstack/salt-vim'
-  --use 'scrooloose/nerdtree'
-  --use 'Shougo/neomru.vim'
-  use 'tpope/vim-commentary'
   use 'tpope/vim-fugitive'
 end)
