@@ -1,6 +1,6 @@
 [user]
   name = Cole Kowalski
-  email = ckowalski@zetaglobal.com
+  email = cole@northernbloc.org
   signingkey = F9DFACC65F7ADCB5
 
 [alias]
@@ -13,10 +13,6 @@
   st = status
   wdiff = diff --color-words
   changed = diff --name-status
-
-  # Create a merge request in gitlab
-  # See: https://docs.gitlab.com/ee/user/project/push_options.html
-  mr = push -o merge_request.create -o merge_request.remove_source_branch -o merge_request.assign=ckowalski
 
 [color]
   branch = auto
@@ -32,6 +28,7 @@
 
 [fetch]
   prune = true
+  pruneTags = true
 
 [push]
   default = tracking
@@ -50,15 +47,3 @@
 
 [includeIf "gitdir:~/dev/_zeta/"]
     path = ~/.config/git/config.zeta
-
-[merge]
-  tool = kdiff3
-
-[mergetool "kdiff3"]
-  path = /usr/bin/kdiff3
-
-[diff]
-  guitool = kdiff3
-
-[difftool "kdiff3"]
-  path = /usr/bin/kdiff3
