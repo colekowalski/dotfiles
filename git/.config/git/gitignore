@@ -9,6 +9,7 @@
 
 .ruby-version
 .python-version
+.mise.toml
 
 .vagrant
 
