@@ -1,0 +1,19 @@
+set visualbell
+set ignorecase      " case-insensitive searching
+set smartcase       " case-sensitive searching if expression contains a capital letter
+set showmatch       " show matching char (like {})
+set wrapscan        " wrap around when reaching the end of a search
+
+set ideamarks       " Sync idea bookmarks and vim global marks
+
+" Plugins
+set surround
+set commentary
+
+let mapleader = ","
+:map <leader>gb <Action>(Switcher)
+:map <leader>gc <Action>(GotoClass)
+:map <leader>gf <Action>(GotoFile)
+:map <leader>gs <Action>(GotoSymbol)
+:map <leader>ns <Action>(NewScratchFile)
+:map <leader>t <Action>(ActivateTerminalToolWindow)
