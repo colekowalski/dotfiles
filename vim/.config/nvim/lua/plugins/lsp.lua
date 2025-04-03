@@ -9,14 +9,27 @@ return {
   },
   opts = {
     servers = {
+      ansiblels = {},
       bashls = {},
       clangd = {},
       cmake = {},
       gopls = {},
-      lua_ls = {},
+      lua_ls = {
+        settings = {
+          Lua = {
+            -- Make the server aware of Neovim runtime files
+            workspace = {
+              checkThridParty = false,
+              library = {
+                vim.env.VIMRUNTIME,
+              },
+            },
+          },
+        },
+      },
       ruff = {},
       rust_analyzer = {},
-      terraform_ls = {},
+      terraformls = {},
       ts_ls = {},
     }
   },
