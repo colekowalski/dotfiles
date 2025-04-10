@@ -27,6 +27,19 @@ return {
           },
         },
       },
+      pyright = {
+        settings = {
+          pyright = {
+            disableOrganizeImports = true, -- Using Ruff
+          },
+          python = {
+            analysis = {
+              ignore = { '*' },        -- Using Ruff
+              typeCheckingMode = 'off' -- Using Mypy
+            },
+          },
+        },
+      },
       ruff = {},
       rust_analyzer = {},
       terraformls = {},
