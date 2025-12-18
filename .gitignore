@@ -9,5 +9,6 @@ vim/.config/nvim/autoload/plug.vim.old
 config/systemd/user/*.wants
 
 karabiner.d/log
+karabiner/.config/karabiner/automatic_backups/
 
 kitty/.config/kitty/local.conf
