@@ -1,6 +1,0 @@
-keycode 66 = Control_L
-keycode 135 = Super_L
-keycode 108 = Alt_R
-clear Lock
-add Control = Control_L
-
