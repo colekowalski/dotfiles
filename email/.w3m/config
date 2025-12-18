@@ -1,0 +1,31 @@
+# Display settings
+tabstop 8
+indent_incr 4
+pixel_per_char 7
+pixel_per_line 17
+
+# Encoding
+display_charset UTF-8
+document_charset UTF-8
+auto_detect_charset 2
+
+# Security settings (important for email)
+use_cookie 0
+accept_cookie 0
+load_stylesheet 1
+use_proxy 0
+
+# Email-friendly rendering
+alt_entity 1
+fold_textarea 1
+display_link_number 1
+display_link 1
+
+# Color scheme (optional)
+color 1
+basic_color terminal
+anchor_color blue
+image_color green
+form_color red
+mark_color cyan
+bg_color terminal

@@ -72,6 +72,8 @@ set mailcap_path = ~/.mutt/mailcap
 macro index,pager \cb "<pipe-message> urlscan<Enter>"
 macro attach,compose \cb "<pipe-entry> urlscan<Enter>"
 
+set editor = "/usr/bin/emacsclient -a /usr/bin/emacs -t"
+
 source ~/.mutt/conf/headers.rc
 source ~/.mutt/conf/colors.rc
 source ~/.mutt/conf/sidebar.rc
