@@ -11,6 +11,8 @@ set surround
 set commentary
 
 let mapleader = ","
+:map <leader>ff <Action>(GotoFile)
+
 :map <leader>gb <Action>(Switcher)
 :map <leader>gc <Action>(GotoClass)
 :map <leader>gf <Action>(GotoFile)
