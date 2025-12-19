@@ -1,8 +1,33 @@
+# Temporary files
+*.tmp
+*.temp
+.DS_Store
+Thumbs.db
+
+# Backup files
+*~
+\#*\#
+*.bak
+*.swp
+*.swo
+
+# Log files
+*.log
+logs/
+
+# Database files
+*.db
+*.db-shm
+*.db-wal
+
+# Language server and tool installations
+node_modules/
+
+# directory configuration
+.dir-locals.el
+
 mutt/cache
 mutt/mailboxes
-
-sbt/boot
-sbt/**/target
 
 vim/.config/nvim/autoload/plug.vim.old
 
