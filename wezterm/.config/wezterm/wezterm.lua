@@ -11,6 +11,9 @@ if wezterm.target_triple:find("darwin") then
 elseif wezterm.target_triple:find("linux") then
   config.enable_wayland = false
   -- config.kde_window_background_blur = true
+
+  -- Disable WezTerm's SSH agent
+  config.mux_enable_ssh_agent = false
 elseif wezterm.target_triple:find("windows") then
   config.win32_system_backdrop = "Mica"
 end
@@ -26,10 +29,7 @@ config.font_size = 13.0
 
 config.color_scheme = 'Tokyo Night'
 
-config.hide_tab_bar_if_only_one_tab = true
-
--- Disable WezTerm's SSH agent
-config.mux_enable_ssh_agent = false
+config.hide_tab_bar_if_only_one_tab = false
 
 -- Load machine-specific configuration if it exists
 local ok, local_config = pcall(require, 'local')
