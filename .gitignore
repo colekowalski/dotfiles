@@ -29,7 +29,7 @@ node_modules/
 mutt/cache
 mutt/mailboxes
 
-vim/.config/nvim/autoload/plug.vim.old
+vim/.config/nvim/lazy-lock.json
 
 config/systemd/user/*.wants
 
