@@ -1,0 +1,72 @@
+#:schema https://docs.jj-vcs.dev/latest/config-schema.json
+
+[user]
+name = "Cole Kowalski"
+email = "cole@northernbloc.org"
+
+
+[ui]
+editor = "nvim"
+diff-editor = ":builtin"
+diff-formatter = ":git"
+default-command = "log"
+
+
+[signing]
+behavior = "own"
+backend = "ssh"
+
+
+[git]
+sign-on-push = true
+
+# Prevent pushing work in progress or anything explicitly labeled "private"
+# https://docs.jj-vcs.dev/latest/config/#set-of-private-commits
+private-commits = "description(glob:'wip:*') | description(glob:'WIP:*') | description(exact:'')"
+
+
+[aliases]
+bm = ["bookmark"]
+gf = ["git", "fetch"]
+gp = ["git", "push"]
+
+# tug - move the nearest bookmark to the nearest non-empty change at or before @
+# https://github.com/jj-vcs/jj/discussions/2425#discussioncomment-13347028
+tug = [
+  "bookmark",
+  "move",
+  "--from",
+  "closest_bookmark(@)",
+  "--to",
+  "closest_nonempty(@)",
+]
+
+
+[revset-aliases]
+# Commits authored by you
+'mine()' = 'author(cole) | author(ckowalski) | author(colekowalski)'
+
+# Show all commits that aren't immutable (trunk/tags/remote branches)
+'wip()' = 'mine() ~ immutable()'
+
+# Unmerged / unpushed work
+'open()' = 'mine() ~ ::trunk()'
+
+# Find the nearest bookmark in ancestry from a revision
+# Used by tug alias to find which bookmark to advance
+'closest_bookmark(to)' = 'heads(::to & bookmarks())'
+
+# Find the nearest non-empty revision in ancestry from a revision
+'closest_nonempty(to)' = 'heads(::to ~ empty())'
+
+# Find the nearest "pushable" commit - non-empty with a description
+# Skips empty WIP commits when advancing bookmarks
+'closest_pushable(to)' = 'heads(::to & mutable() & ~description(exact:"") & (~empty() | merges()))'
+
+# Show current branch from @ to its leaf commits
+'current()' = '@:: & mutable()'
+
+# Show your entire stack - all mutable commits connected to @
+# reachable() finds commits reachable in any direction (ancestors + descendants)
+# within the mutable() set (excludes immutable trunk/tags)
+'stack()' = 'reachable(@, mutable())'

@@ -37,3 +37,7 @@ karabiner.d/log
 karabiner/.config/karabiner/automatic_backups/
 
 kitty/.config/kitty/local.conf
+
+# Jujutsu
+jj/.config/jj/repos
+jj/.config/jj/conf.d/local.toml
