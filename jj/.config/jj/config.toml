@@ -28,6 +28,7 @@ private-commits = "description(glob:'wip:*') | description(glob:'WIP:*') | descr
 [aliases]
 bm = ["bookmark"]
 gf = ["git", "fetch"]
+gfa = ["git", "fetch", "--all-remotes"]
 gp = ["git", "push"]
 
 # tug - move the nearest bookmark to the nearest non-empty change at or before @
