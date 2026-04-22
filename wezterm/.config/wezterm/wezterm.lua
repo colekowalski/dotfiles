@@ -28,6 +28,9 @@ config.color_scheme = 'Tokyo Night'
 
 config.hide_tab_bar_if_only_one_tab = true
 
+-- Disable WezTerm's SSH agent
+config.mux_enable_ssh_agent = false
+
 -- Load machine-specific configuration if it exists
 local ok, local_config = pcall(require, 'local')
 if ok and local_config then
