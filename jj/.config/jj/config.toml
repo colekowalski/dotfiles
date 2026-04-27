@@ -30,6 +30,8 @@ bm = ["bookmark"]
 gf = ["git", "fetch"]
 gfa = ["git", "fetch", "--all-remotes"]
 gp = ["git", "push"]
+blame = ["file", "annotate"]
+open = ["log", "-r", "open()"]
 
 # tug - move the nearest bookmark to the nearest non-empty change at or before @
 # https://github.com/jj-vcs/jj/discussions/2425#discussioncomment-13347028
