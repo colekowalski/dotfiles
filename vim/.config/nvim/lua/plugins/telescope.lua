@@ -8,6 +8,15 @@ return {
     },
     config = function()
       local telescope = require("telescope")
+      telescope.setup({
+        pickers = {
+          find_files = {
+            find_command = {
+              "rg", "--files", "--hidden", "--glob", "!.git", "--glob", "!.jj", "--no-require-git",
+            },
+          },
+        },
+      })
       pcall(telescope.load_extension, "fzf")
       pcall(telescope.load_extension, "jj")
     end,
@@ -17,7 +26,6 @@ return {
       { "<leader>fb", "<cmd>Telescope buffers<cr>",    desc = "Telescope buffers" },
       { "<leader>fh", "<cmd>Telescope help_tags<cr>",  desc = "Telescope help tags" },
       { "<leader>fr", "<cmd>Telescope registers<cr>",  desc = "Telescope registers" },
-
       {
         "<leader>sf",
         function()
