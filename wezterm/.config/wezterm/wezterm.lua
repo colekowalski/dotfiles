@@ -29,6 +29,19 @@ config.font_size = 13.0
 
 config.color_scheme = 'Tokyo Night'
 
+-- Use the wezterm terminfo entry so ncurses sees RGB capability (truecolor).
+-- Superset of xterm-256color; anything that worked before still works.
+--
+-- If you want to get the most application support out of wezterm, then you
+-- may wish to install a copy of the wezterm TERM definition:
+-- tempfile=$(mktemp) \
+--     && curl -o $tempfile https://raw.githubusercontent.com/wezterm/wezterm/main/termwiz/data/wezterm.terminfo \
+--     && tic -x -o ~/.terminfo $tempfile \
+--     && rm $tempfile
+--
+-- See: https://wezterm.org/config/lua/config/term.html
+config.term = 'wezterm'
+
 config.hide_tab_bar_if_only_one_tab = false
 
 -- Load machine-specific configuration if it exists
