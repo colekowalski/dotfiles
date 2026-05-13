@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+# Suspend only if there are no active SSH sessions.
+
+# Look for any logind session whose Remote property is "yes".
+# This catches SSH (and similar remote sessions) without false positives
+# from local TTYs or your Hyprland session.
+remote_sessions=$(loginctl list-sessions --no-legend |
+  awk '{print $1}' |
+  xargs -r -I{} loginctl show-session {} -p Remote --value |
+  grep -c '^yes$')
+
+if [ "$remote_sessions" -gt 0 ]; then
+  logger -t hypridle "Skipping suspend: $remote_sessions remote session(s) active"
+  exit 0
+fi
+
+systemctl suspend
