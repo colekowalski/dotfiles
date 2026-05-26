@@ -1,0 +1,9 @@
+# ~/.config/neomutt/mailcap
+#
+# Used by `auto_view text/html` in neomuttrc to render HTML mail inline.
+# Requires `w3m` (preferred) or `lynx`. Install with: brew install w3m
+
+text/html;  w3m -dump -T text/html -cols 100 -o display_link_number=1 -o display_image=false %s; copiousoutput; nametemplate=%s.html
+text/calendar; less %s; copiousoutput
+application/pdf; open %s
+image/*; open %s

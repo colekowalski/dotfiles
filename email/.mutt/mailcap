@@ -1,6 +1,0 @@
-text/html; w3m -I %{charset} -T text/html -dump -cols 80 -O utf8; copiousoutput; description=HTML Text; nametemplate=%s.html
-application/pdf; okular %s
-image/jpg; gwenview %s
-image/jpeg; gwenview %s
-image/gif; gwenview %s
-image/png; gwenview %s

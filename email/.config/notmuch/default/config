@@ -1,0 +1,82 @@
+# ~/.config/notmuch/default/config
+#
+# Single notmuch database covering both accounts. The DB lives at the root
+# of the maildir tree so it indexes everything underneath it.
+#
+# First-time setup:
+#   1. Place this file at ~/.config/notmuch/default/config
+#   2. Run: notmuch new
+#      (will scan ~/.mail/ and build the initial index)
+#   3. Run: afew --tag --new
+#      (apply derived tags from folder location, headers, etc.)
+#
+# Optional: after the first index, mark all pre-existing mail as read so
+# you start with a clean slate:
+#   notmuch tag -unread -- '*'
+#
+# Tag backups (recommended periodically):
+#   notmuch dump --output=~/.mail/.notmuch-tags.backup
+# Restore with:
+#   notmuch restore --input=~/.mail/.notmuch-tags.backup
+
+[database]
+path=/home/cole/.mail
+mail_root=/home/cole/.mail
+
+[user]
+name=Cole Kowalski
+primary_email=cole@northernbloc.org
+other_email=cole@riskitforthebrisketbbq.com
+
+[new]
+# Tags applied to newly-indexed messages. `new` is stripped by afew after
+# processing; `unread` is reconciled against the maildir S flag immediately.
+tags=new;unread;
+ignore=.mbsyncstate;.uidvalidity;.notmuch;.DS_Store
+
+[search]
+# Tags excluded from default search results. Spam/deleted stay out of
+# `tag:inbox` queries; killed threads are muted; drafts are noisy by nature.
+exclude_tags=deleted;spam;killed
+
+[maildir]
+# Sync notmuch tags <-> maildir flags so read state, flagged state, and
+# draft state propagate via mbsync to IMAP (and back from your phone).
+synchronize_flags=true
+
+[index]
+header.spam=X-Spam-Flag
+
+# ---------------------------------------------------------------------------
+# Named queries
+# ---------------------------------------------------------------------------
+# Define reusable query aliases. Reference these as `query:<name>` in any
+# notmuch search, including from NeoMutt virtual mailboxes:
+#
+#   notmuch search query:inbox
+#   notmuch://?query=query:inbox
+#
+# Note on folder/path syntax:
+#   - `folder:foo/bar`     — exact maildir folder path (no globs)
+#   - `path:foo/**`        — recursive subtree match (supports /** glob)
+# Folder names are case-sensitive and must match what's on disk.
+
+[query]
+inbox        = (folder:northernbloc/Inbox or folder:riskitforthebrisket/Inbox) and not tag:spam and not tag:killed
+unread       = query:inbox and tag:unread
+to-me        = tag:to-me and tag:unread and not tag:lists
+lists        = tag:lists and not tag:killed
+lists-unread = query:lists and tag:unread
+gmail        = tag:gmail and not tag:killed
+gmail-unread = query:gmail and tag:unread
+flagged      = tag:flagged
+sent         = tag:sent
+archive      = tag:archive
+killed       = tag:killed
+spam         = tag:spam
+today        = date:1d.. and query:inbox
+week         = date:7d.. and query:inbox
+
+# Per-account convenience
+nb-inbox      = folder:northernbloc/Inbox and not tag:spam and not tag:killed
+brisket-inbox = folder:riskitforthebrisket/Inbox and not tag:spam and not tag:killed

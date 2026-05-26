@@ -1,0 +1,251 @@
+# ~/.config/neomutt/neomuttrc
+#
+# Main NeoMutt configuration. Per-account identity is loaded via folder-hooks
+# from accounts/northernbloc and accounts/riskitforthebrisket.
+#
+# Layout:
+#   ~/.mail/<account>/INBOX, Sent, Drafts, Trash, Archive/YYYY/...
+#   ~/.config/notmuch/default/config -> single index across both accounts
+#
+# Sync: run `mailsync` from the shell (which calls mbsync, notmuch new, afew).
+
+# ---------------------------------------------------------------------------
+# Core paths
+# ---------------------------------------------------------------------------
+set folder           = "~/.mail"
+set spoolfile        = "notmuch://?query=query:inbox"
+set mbox_type        = Maildir
+set header_cache     = "~/.cache/neomutt/headers"
+set message_cachedir = "~/.cache/neomutt/bodies"
+set tmpdir           = "~/.cache/neomutt/tmp"
+
+# Default identity (overridden per account via folder-hook)
+set realname = "Cole Kowalski"
+set from     = "cole@northernbloc.org"
+set use_from = yes
+set envelope_from = yes
+
+# ---------------------------------------------------------------------------
+# Sending mail (msmtp)
+# ---------------------------------------------------------------------------
+set sendmail        = "msmtp -a northernbloc"
+set sendmail_wait   = 0
+unset record                       # accounts override this with their Sent
+set copy            = yes
+set fcc_clear       = yes          # save Sent as cleartext (no encryption)
+unset user_agent                   # don't leak NeoMutt version on outgoing mail
+
+# ---------------------------------------------------------------------------
+# Compose / editor
+# ---------------------------------------------------------------------------
+set editor             = "$EDITOR"
+set edit_headers       = no
+set fast_reply         = yes       # don't prompt for subject/recipients on reply
+set include            = yes       # quote message in reply by default
+set forward_format     = "Fwd: %s"
+set forward_quote      = yes
+set reverse_name       = yes       # use the address mail was sent to as From:
+set reverse_realname   = no
+set sig_dashes         = yes
+set text_flowed        = yes       # format=flowed; plays nicer with mobile clients
+
+# ---------------------------------------------------------------------------
+# Reading / display
+# ---------------------------------------------------------------------------
+set sort               = threads
+set sort_aux           = last-date-received
+set index_format       = "%4C %Z %{%b %d} %-15.15L (%?l?%4l&%4c?) %s %> %g"
+
+# Ellipsize very long subjects in the index/pager/threads. Only affects
+# display + threading; replies and forwards still use the original subject
+# from the message header.
+subjectrx '^(.{90}).+$' '%1…'
+set strict_threads     = no
+set sort_re            = yes
+set uncollapse_jump    = yes
+set markers            = no
+set pager_index_lines  = 10
+set pager_context      = 3
+set pager_stop         = yes
+set menu_scroll        = yes
+set tilde              = yes
+set wait_key           = no
+set timeout            = 3
+set mail_check         = 5
+set beep_new           = no
+set status_on_top      = yes
+
+# Headers to show in the pager
+ignore *
+unignore from to cc bcc date subject reply-to organization x-mailer user-agent list-id
+
+# ---------------------------------------------------------------------------
+# Sidebar
+# ---------------------------------------------------------------------------
+set sidebar_visible       = no
+set sidebar_width         = 28
+set sidebar_short_path    = yes
+set sidebar_delim_chars   = "/"
+set sidebar_format        = "%D%* %?N?%N/?%S"
+set sidebar_sort_method   = unsorted
+set sidebar_indent_string = "  "
+set mail_check_stats      = yes
+
+# ---------------------------------------------------------------------------
+# notmuch integration
+# ---------------------------------------------------------------------------
+set nm_default_url       = "notmuch:///home/cole/.mail"
+set nm_record            = no
+set nm_query_window_duration = 0      # no time-window limit on virtual queries
+
+# Virtual mailboxes — saved searches that show up alongside real folders.
+# Queries reference the named queries defined in
+# ~/.config/notmuch/default/config, so editing those updates these views
+# automatically.
+#
+# `Inbox` uses folder-based detection (folder:**/INBOX) so archiving a
+# message (moving its file out of INBOX) automatically removes it from
+# the unified inbox without requiring tag manipulation.
+virtual-mailboxes \
+    "Inbox"        "notmuch://?query=query:inbox" \
+    "Unread"       "notmuch://?query=query:unread" \
+    "Flagged"      "notmuch://?query=query:flagged" \
+    "Today"        "notmuch://?query=query:today" \
+    "Archive"      "notmuch://?query=query:archive" \
+    "Last 7 days"  "notmuch://?query=query:week" \
+    "Lists"        "notmuch://?query=query:lists-unread" \
+    "GMail"        "notmuch://?query=query:gmail" \
+    "Northernbloc" "notmuch://?query=query:nb-inbox" \
+    "Brisket"      "notmuch://?query=query:brisket-inbox"
+
+# ---------------------------------------------------------------------------
+# Address completion via notmuch-addrlookup
+# ---------------------------------------------------------------------------
+set query_command = "notmuch-addrlookup '%s'"
+bind editor <Tab> complete-query
+
+# ---------------------------------------------------------------------------
+# Account switching via folder-hook
+# ---------------------------------------------------------------------------
+folder-hook 'northernbloc/'        source ~/.config/neomutt/accounts/northernbloc
+folder-hook 'riskitforthebrisket/' source ~/.config/neomutt/accounts/riskitforthebrisket
+
+# Default to northernbloc when in a notmuch virtual mailbox
+folder-hook 'notmuch://' source ~/.config/neomutt/accounts/northernbloc
+
+# ---------------------------------------------------------------------------
+# Keybinds — archive, delete, trash, account macros
+# ---------------------------------------------------------------------------
+# Archive (`A`) and Trash (`d`):
+#
+# Per-account state — the `A` macro target and `$trash` — is set by the
+# account files, which are sourced by the folder-hooks above when entering a
+# real maildir under either account.
+#
+# In the unified `notmuch://` Inbox, no folder-hook matches, so the
+# message-hooks below dispatch per-message based on Delivered-To. They
+# duplicate the account-file logic intentionally; keeping the canonical
+# definition in the account files means real-maildir browsing only needs the
+# folder-hook, and the message-hooks are the cross-account dispatch layer
+# that only fires in notmuch virtual mailboxes.
+#
+# The backtick `date +%Y` is re-evaluated each time the hook fires, so the
+# archive year stays current without restarting neomutt.
+message-hook '~h "Delivered-To:.*cole@northernbloc\.org"' \
+    'macro index,pager A "<save-message>=northernbloc/Archive/`date +%Y`/<enter>" "Archive to northernbloc/Archive/<year>"'
+message-hook '~h "Delivered-To:.*cole@northernbloc\.org"' \
+    'set trash="+northernbloc/Trash"'
+message-hook '~h "Delivered-To:.*cole@riskitforthebrisketbbq\.com"' \
+    'macro index,pager A "<save-message>=riskitforthebrisket/Archive/`date +%Y`/<enter>" "Archive to riskitforthebrisket/Archive/<year>"'
+message-hook '~h "Delivered-To:.*cole@riskitforthebrisketbbq\.com"' \
+    'set trash="+riskitforthebrisket/Trash"'
+
+# Kill a thread: tag with `killed`, propagated to descendants by afew's
+# KillThreadsFilter on subsequent syncs. Excluded from inbox and search.
+# macro index,pager K "<modify-labels>+killed -inbox -unread<enter>" "Kill thread"
+
+# Quick search via notmuch (prompts for query, opens results as virtual mbox)
+macro index,pager \\\\ "<vfolder-from-query>" "Search with notmuch"
+
+# Modify notmuch tags on the current message
+macro index,pager + "<modify-labels>" "Modify notmuch tags"
+
+# Sync mail from inside neomutt
+macro index,pager o "<shell-escape>mailsync<enter>" "Run mailsync"
+
+# ---------------------------------------------------------------------------
+# URL handling
+# ---------------------------------------------------------------------------
+# urlscan rejoins URLs that wrap across lines (which break Wezterm's
+# click-to-follow) and presents an interactive picker. Opens the chosen URL
+# via $BROWSER, falling back to `open` on macOS.
+macro index,pager    \cb "<pipe-message> urlscan<enter>" "Pick a URL with urlscan"
+macro attach,compose \cb "<pipe-entry> urlscan<enter>"   "Pick a URL from this part with urlscan"
+
+# Sidebar navigation
+bind index,pager \Ck sidebar-prev
+bind index,pager \Cj sidebar-next
+bind index,pager \Co sidebar-open
+bind index,pager \Cp sidebar-prev-new
+bind index,pager \Cn sidebar-next-new
+bind index,pager B   sidebar-toggle-visible
+
+# ---------------------------------------------------------------------------
+# Colors (minimal, readable defaults)
+# ---------------------------------------------------------------------------
+# The MacPorts wezterm terminfo entry omits the RGB capability, so NeoMutt's
+# autodetection refuses hex colors. Force directcolor on; wezterm renders 24-bit
+# fine regardless of what terminfo advertises.
+# set color_directcolor = no
+
+# color normal      default default
+# color indicator   black   cyan
+# color tree        yellow  default
+# color status      black   green
+# color error       red     default
+# color message     cyan    default
+# color signature   brightblack default
+# color attachment  brightyellow default
+# color search      black   yellow
+# color tilde       brightblack default
+# color hdrdefault  cyan    default
+#
+# color quoted      blue    default
+# color quoted1     green   default
+# color quoted2     yellow  default
+# color quoted3     red     default
+
+#color sidebar_indicator  black cyan
+#color sidebar_highlight  white black
+#color sidebar_new        green default
+#color sidebar_unread     yellow default
+color sidebar_unread     green default
+#
+# # Highlight unread/flagged in the index
+# color index brightwhite default "~N"        # new
+# color index brightwhite default "~O"        # old-but-unread
+# color index brightred   default "~F"        # flagged
+#
+# Tag-based highlighting in notmuch virtual mailboxes
+color index brightblack default "~y lists"  # mailing lists - dimmer
+# color index brightred   default "~y to-me"  # directly addressed - prominent
+#
+# Theme — sourced last so it overrides the named-color defaults above.
+# Sidebar + tag-based index rules above are kept since the theme doesn't cover them.
+source ~/.config/neomutt/colors/Ayu.rc
+
+# ---------------------------------------------------------------------------
+# Misc
+# ---------------------------------------------------------------------------
+set abort_noattach = ask-yes
+set abort_unmodified = yes
+set abort_nosubject = ask-yes
+set askcc = no
+set askbcc = no
+set forward_decode = yes
+set mime_forward = no
+
+# HTML rendering: hand off to w3m or lynx via mailcap
+set mailcap_path = "~/.config/neomutt/mailcap"
+auto_view text/html
+alternative_order text/plain text/enriched text/html

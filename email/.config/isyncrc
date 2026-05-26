@@ -1,0 +1,105 @@
+# =============================================================================
+# mbsync config -- ~/.mbsyncrc
+#
+# Sections (IMAPAccount / IMAPStore / MaildirStore / Channel) are terminated
+# by a truly blank line. Comment-only lines do NOT terminate a section --
+# they're treated as part of the surrounding block. Keep one blank line
+# between sections.
+# =============================================================================
+
+# --- Global defaults ---------------------------------------------------------
+# Keep per-channel sync state (UID maps) inside each Maildir, not in
+# ~/.mbsync/. Co-locating state with mail makes atomic backup / restore /
+# move-to-another-machine trivial: tar the Maildir and you have everything.
+SyncState *
+
+# =============================================================================
+# ACCOUNT 1: "northernbloc.org"
+# =============================================================================
+IMAPAccount northernbloc
+Host                mail.northernbloc.org
+Port                993
+User                cole@northernbloc.org
+TLSType             IMAPS
+# Refuse anything weaker than TLS 1.2. Each version needs a +/- prefix.
+TLSVersions         +1.2 +1.3 -1.1 -1.0
+# Use the OS trust store. On macOS this is the System keychain; on most
+# Linuxes it's /etc/ssl/certs/ca-certificates.crt. Override per-account
+# with CertificateFile if you need to pin a self-signed CA.
+SystemCertificates  yes
+# Store the password securely
+PassCmd             "pass show email/northernbloc"
+# Pipeline commands but don't stampede a server we don't own.
+PipelineDepth       50
+# Skip messages over this size. Useful to keep multi-GB attachment threads
+# out of your local Maildir. 0 (or unset) = no limit.
+# MaxMessageSize    50m
+
+# --- Remote store ------------------------------------------------------------
+IMAPStore           northernbloc-remote
+Account             northernbloc
+# Where mbsync moves messages that get expunged (server-side trash folder).
+Trash               "Trash"
+
+# --- Local store -------------------------------------------------------------
+MaildirStore        northernbloc-local
+Path                ~/.mail/northernbloc/
+Inbox               ~/.mail/northernbloc/Inbox
+SubFolders          Verbatim
+
+# --- Channel -----------------------------------------------------------------
+Channel             northernbloc
+Far                 :northernbloc-remote:
+Near                :northernbloc-local:
+Patterns            *
+Sync                All
+# Preserve the original "Internal Date" in Maildir filenames so messages
+# keep their real received-time after sync.
+CopyArrivalDate     yes
+# Full two-way sync: create missing folders on either side, propagate folder
+# deletions both ways, and physically expunge \Deleted messages on both sides.
+# The remote IMAPStore declares `Trash "Trash"`, so server-side expunges are
+# copied to the Trash folder first -- deletions aren't immediately destructive
+# on the server. Local expunges are unconditional unlinks (Maildir is cheap to
+# re-pull from the server if needed).
+Create              Both
+Remove              Both
+Expunge             Both
+
+
+# =============================================================================
+# ACCOUNT 2: "riskitforthebrisket"
+# =============================================================================
+IMAPAccount riskitforthebrisket
+Host                mail.northernbloc.org
+Port                993
+User                cole@riskitforthebrisketbbq.com
+TLSType             IMAPS
+TLSVersions         +1.2 +1.3 -1.1 -1.0
+SystemCertificates  yes
+PassCmd             "pass show email/riskitforthebrisket"
+PipelineDepth       50
+# MaxMessageSize    50m
+
+# --- Remote store ------------------------------------------------------------
+IMAPStore           riskitforthebrisket-remote
+Account             riskitforthebrisket
+Trash               "Trash"
+
+# --- Local store -------------------------------------------------------------
+MaildirStore        riskitforthebrisket-local
+Path                ~/.mail/riskitforthebrisket/
+Inbox               ~/.mail/riskitforthebrisket/Inbox
+SubFolders          Verbatim
+
+# --- Channel -----------------------------------------------------------------
+Channel             riskitforthebrisket
+Far                 :riskitforthebrisket-remote:
+Near                :riskitforthebrisket-local:
+Patterns            *
+Sync                All
+CopyArrivalDate     yes
+# See ACCOUNT 1 for rationale.
+Create              Both
+Remove              Both
+Expunge             Both

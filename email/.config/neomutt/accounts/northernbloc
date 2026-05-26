@@ -1,0 +1,22 @@
+# ~/.config/neomutt/accounts/northernbloc
+#
+# Loaded when entering a folder under northernbloc/. Sets the From identity,
+# the Sent/Drafts paths, and points msmtp at this account.
+
+set from         = "cole@northernbloc.org"
+set realname     = "Cole Kowalski"
+set sendmail     = "msmtp -a northernbloc"
+
+set spoolfile    = "+northernbloc/Inbox"
+set record       = "+northernbloc/Sent"
+set postponed    = "+northernbloc/Drafts"
+set trash        = "+northernbloc/Trash"
+
+# `date +%Y` is re-evaluated each time this is sourced, so the archive year
+# stays current without restarting neomutt.
+macro index,pager A \
+    "<save-message>=northernbloc/Archive/`date +%Y`/<enter>" \
+    "Archive to northernbloc/Archive/<year>"
+
+# Optional: per-account signature
+# set signature = "~/.config/neomutt/sig/northernbloc"

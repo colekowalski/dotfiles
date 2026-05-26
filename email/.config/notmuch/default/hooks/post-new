@@ -1,0 +1,213 @@
+#!/usr/bin/env bash
+#
+# ~/.config/notmuch/default/hooks/post-new
+#
+# Runs automatically after every `notmuch new`. Applies derived tags to
+# newly-indexed messages (those carrying `tag:new`) based on folder
+# location and headers, then strips `tag:new`.
+#
+# Replaces afew. Less feature-complete (no per-list tag granularity, no
+# DKIM validation) but covers the essentials and has zero Python deps.
+#
+# To make this file active:
+#
+#   chmod +x ~/.config/notmuch/default/hooks/post-new
+#
+# To re-apply tags to existing mail (e.g., after editing this script):
+#
+#   notmuch tag +new -- '*'
+#   notmuch new
+#
+# Folder names are CASE-SENSITIVE and must match what's on disk. Edit the
+# ACCOUNTS array and folder names below to match your maildir layout.
+# notmuch's `folder:` prefix matches exact paths (no globs); use `path:`
+# with `/**` for recursive subtree matches.
+
+set -euo pipefail
+
+# Accounts (top-level subdirectories of the maildir root).
+ACCOUNTS=(northernbloc riskitforthebrisket)
+
+# Primary address — sourced from notmuch config so there's one source of truth.
+# Used to surface GMail mail addressed to primary into the unified inbox.
+PRIMARY_EMAIL=$(notmuch config get user.primary_email)
+
+# Folder names within each account (must match your local maildir).
+INBOX_FOLDER=Inbox
+SENT_FOLDER=Sent
+DRAFTS_FOLDER=Drafts
+TRASH_FOLDER=Trash
+ARCHIVE_FOLDER=Archive
+SPAM_FOLDERS=(Spam Junk)   # both names are checked
+
+# ---------------------------------------------------------------------------
+# Helpers — build OR-joined folder queries from the account list
+# ---------------------------------------------------------------------------
+
+# Echoes:  (folder:acc1/<name> or folder:acc2/<name> or ...)
+folder_query() {
+    local name="$1"
+    local q="" sep=""
+    for acc in "${ACCOUNTS[@]}"; do
+        q+="${sep}folder:${acc}/${name}"; sep=" or "
+    done
+    echo "($q)"
+}
+
+# Echoes:  (path:acc1/<name>/** or path:acc2/<name>/** or ...)
+path_query() {
+    local name="$1"
+    local q="" sep=""
+    for acc in "${ACCOUNTS[@]}"; do
+        q+="${sep}path:${acc}/${name}/**"; sep=" or "
+    done
+    echo "($q)"
+}
+
+# Echoes:  (folder:acc1/Spam or folder:acc1/Junk or folder:acc2/Spam or ...)
+spam_folder_query() {
+    local q="" sep=""
+    for acc in "${ACCOUNTS[@]}"; do
+        for f in "${SPAM_FOLDERS[@]}"; do
+            q+="${sep}folder:${acc}/${f}"; sep=" or "
+        done
+    done
+    echo "($q)"
+}
+
+# ============================================================================
+# Phase 1: Enrichment tags (don't strip tag:new — downstream phases need it)
+# ============================================================================
+
+# Per-account tags
+for acc in "${ACCOUNTS[@]}"; do
+    notmuch tag "+${acc}" -- "tag:new and path:${acc}/**"
+done
+
+# Mailing list detection — header-based using notmuch's indexed `list:` prefix
+# (case-insensitive, catches both `List-Id` and `List-ID`). The original rule
+# used `List-Id:*`, which is a body-text search and silently under-tagged.
+notmuch tag +lists -- 'tag:new and list:""' 2>/dev/null || true
+
+# Folder-based fallback for lists without `List-Id` (e.g. ezmlm lists like
+# idm that only ship `Mailing-List:` + lowercase `list-*` headers).
+notmuch tag +lists -- "tag:new and $(path_query "Lists")"
+
+# Per-list leaf tag: Lists/oss-security -> +oss-security. Driven by the live
+# directory listing so new lists picked up by sieve auto-tag without edits.
+for acc in "${ACCOUNTS[@]}"; do
+    for d in "$HOME/.mail/$acc/Lists/"*/; do
+        [ -d "$d" ] || continue
+        leaf=$(basename "$d")
+        case "$leaf" in cur|new|tmp) continue;; esac
+        notmuch tag "+${leaf}" -- "tag:new and folder:${acc}/Lists/${leaf}"
+    done
+done
+
+# GMail folder tag.
+notmuch tag +gmail -- "tag:new and $(path_query "GMail")"
+
+# ============================================================================
+# Phase 2: Folder-based classification (each phase 2 rule strips tag:new)
+# ============================================================================
+
+# Sent mail
+notmuch tag +sent -new -inbox -unread \
+    -- "tag:new and $(folder_query "$SENT_FOLDER")"
+
+# Drafts
+notmuch tag +drafts -new -inbox \
+    -- "tag:new and $(folder_query "$DRAFTS_FOLDER")"
+
+# Trash
+notmuch tag +deleted -new \
+    -- "tag:new and $(folder_query "$TRASH_FOLDER")"
+
+# Spam (server-side classification by rspamd)
+notmuch tag +spam -new -inbox -unread \
+    -- "tag:new and $(spam_folder_query)"
+
+# Archive year tags first, then strip new on the umbrella +archive
+# current_year=$(date +%Y)
+# for year in $(seq 2015 "$current_year"); do
+#     yq=""
+#     sep=""
+#     for acc in "${ACCOUNTS[@]}"; do
+#         yq+="${sep}path:${acc}/${ARCHIVE_FOLDER}/${year}/**"; sep=" or "
+#     done
+#     notmuch tag "+archive/$year" -- "tag:new and ($yq)" 2>/dev/null || true
+# done
+notmuch tag +archive -new -inbox \
+    -- "tag:new and $(path_query "$ARCHIVE_FOLDER")"
+
+# GMail mail also addressed to primary appears in the unified inbox. Sieve
+# should already exclude this case server-side; this is a safety net for any
+# future rule drift. Does NOT strip tag:new — Phase 3 finalises that.
+notmuch tag +inbox \
+    -- "tag:new and $(path_query "GMail") and to:${PRIMARY_EMAIL}"
+
+# ============================================================================
+# Phase 3: Catch-all — mail still tagged `new` AND in an actual Inbox folder
+# becomes +inbox. Anything else (Lists/, GMail/ without to:primary,
+# manually-filed Scouting/School/etc.) just loses tag:new with no +inbox.
+# ============================================================================
+
+notmuch tag +inbox -new \
+    -- "tag:new and $(folder_query "$INBOX_FOLDER")"
+
+notmuch tag -new -- 'tag:new'
+
+# ============================================================================
+# Phase 4: Cross-cutting — killed-thread propagation
+# ============================================================================
+
+notmuch tag +killed -inbox -unread \
+    -- 'thread:"{tag:killed}" and not tag:killed'
+
+# ============================================================================
+# Phase 5: Reconciliation — keep folder-derived tags in sync with file
+# location across ALL messages, not just new ones. Without this, mail moved
+# in NeoMutt (e.g. Inbox -> Scouting) keeps its old +inbox tag forever.
+# Per-tag ops on already-correct messages are cheap no-ops.
+# ============================================================================
+
+# +inbox iff in Inbox/ OR (in GMail/ AND addressed to primary).
+notmuch tag +inbox \
+    -- "$(path_query "GMail") and to:${PRIMARY_EMAIL} and not tag:inbox"
+notmuch tag -inbox \
+    -- "tag:inbox and not $(folder_query "$INBOX_FOLDER") and not ($(path_query "GMail") and to:${PRIMARY_EMAIL})"
+
+# +lists iff under Lists/**.
+notmuch tag +lists -- "$(path_query "Lists") and not tag:lists"
+notmuch tag -lists -- "tag:lists and not $(path_query "Lists")"
+
+# +gmail iff under GMail/**.
+notmuch tag +gmail -- "$(path_query "GMail") and not tag:gmail"
+notmuch tag -gmail -- "tag:gmail and not $(path_query "GMail")"
+
+# Per-list leaf tags: add to messages in matching Lists/<leaf>, strip from
+# anything else still carrying that leaf tag.
+for acc in "${ACCOUNTS[@]}"; do
+    for d in "$HOME/.mail/$acc/Lists/"*/; do
+        [ -d "$d" ] || continue
+        leaf=$(basename "$d")
+        case "$leaf" in cur|new|tmp) continue;; esac
+        notmuch tag "+${leaf}" \
+            -- "folder:${acc}/Lists/${leaf} and not tag:${leaf}"
+        notmuch tag "-${leaf}" \
+            -- "tag:${leaf} and not folder:northernbloc/Lists/${leaf} and not folder:riskitforthebrisket/Lists/${leaf}"
+    done
+done
+
+# ============================================================================
+# Optional: header-based spam tagging
+# ============================================================================
+# Requires this in ~/.config/notmuch/default/config:
+#
+#   [index]
+#   header.spam=X-Spam-Flag
+#
+# Then uncomment:
+#
+# notmuch tag +spam -new -inbox -unread \
+#     -- 'tag:new and spam:YES' 2>/dev/null || true

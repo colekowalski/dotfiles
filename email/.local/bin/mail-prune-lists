@@ -1,0 +1,159 @@
+#!/bin/sh
+#
+# ~/bin/mail-prune-lists
+#
+# Delete mailing-list messages (tag:lists) older than N days. Flagged
+# messages are preserved unconditionally.
+#
+# Defaults to a dry-run that prints per-list counts; pass --apply to
+# actually unlink. Local removals are propagated to the IMAP server by
+# the next mbsync run (mbsync is configured with `Expunge Both` and
+# `Trash "Trash"`, so the server-side delete lands in Trash first).
+#
+# Usage:
+#   mail-prune-lists                 # dry-run, default 90d threshold
+#   mail-prune-lists --days 180      # dry-run, different threshold
+#   mail-prune-lists --apply         # actually delete
+#   MAIL_PRUNE_DAYS=120 mail-prune-lists --apply
+#
+# Logs to ~/.cache/mail-prune-lists.log.
+
+set -eu
+
+# ---------------------------------------------------------------------------
+# PATH: prepend known package-manager prefixes if they exist, same as
+# mailsync. Lets this run from a LaunchAgent/cron with a minimal env.
+# ---------------------------------------------------------------------------
+for d in /opt/local/bin /opt/local/sbin \
+         /opt/homebrew/bin /opt/homebrew/sbin \
+         /usr/local/bin /usr/local/sbin \
+         /usr/pkg/bin /usr/pkg/sbin
+do
+    [ -d "$d" ] && PATH="$d:$PATH"
+done
+export PATH
+
+DAYS="${MAIL_PRUNE_DAYS:-90}"
+APPLY=0
+
+while [ $# -gt 0 ]; do
+    case "$1" in
+        --days)
+            [ $# -ge 2 ] || { echo "--days requires a value" >&2; exit 2; }
+            DAYS="$2"; shift 2
+            ;;
+        --days=*)
+            DAYS="${1#--days=}"; shift
+            ;;
+        --apply)
+            APPLY=1; shift
+            ;;
+        -h|--help)
+            sed -n '2,20p' "$0" | sed 's/^# \{0,1\}//'
+            exit 0
+            ;;
+        *)
+            echo "unknown argument: $1" >&2
+            exit 2
+            ;;
+    esac
+done
+
+case "$DAYS" in
+    ''|*[!0-9]*)
+        echo "--days must be a non-negative integer (got: $DAYS)" >&2
+        exit 2
+        ;;
+esac
+
+QUERY="tag:lists and date:..${DAYS}d and not tag:flagged"
+LOG="${MAIL_PRUNE_LOG:-$HOME/.cache/mail-prune-lists.log}"
+LOCKDIR="${TMPDIR:-/tmp}/mail-prune-lists.lock.$(id -u)"
+
+mkdir -p "$(dirname "$LOG")"
+
+# ---------------------------------------------------------------------------
+# Lock acquisition via atomic mkdir (same pattern as mailsync).
+# ---------------------------------------------------------------------------
+acquire_lock() {
+    if mkdir "$LOCKDIR" 2>/dev/null; then
+        echo $$ > "$LOCKDIR/pid"
+        return 0
+    fi
+    if [ -r "$LOCKDIR/pid" ]; then
+        existing=$(cat "$LOCKDIR/pid" 2>/dev/null || true)
+        if [ -n "$existing" ] && kill -0 "$existing" 2>/dev/null; then
+            return 1
+        fi
+    fi
+    rm -rf "$LOCKDIR"
+    mkdir "$LOCKDIR" 2>/dev/null || return 1
+    echo $$ > "$LOCKDIR/pid"
+    return 0
+}
+
+release_lock() {
+    rm -rf "$LOCKDIR"
+}
+
+if ! acquire_lock; then
+    echo "[$(date)] mail-prune-lists: another instance is running, skipping" >> "$LOG"
+    exit 0
+fi
+trap release_lock EXIT INT TERM HUP
+
+# ---------------------------------------------------------------------------
+# Discover matches. File list is captured to a temp file so we can both
+# count it (for the per-list breakdown) and feed it to xargs.
+# ---------------------------------------------------------------------------
+FILES=$(mktemp "${TMPDIR:-/tmp}/mail-prune-lists.files.XXXXXX")
+trap 'rm -f "$FILES"; release_lock' EXIT INT TERM HUP
+
+notmuch search --output=files --format=text0 -- "$QUERY" > "$FILES"
+
+# Count messages (NUL-delimited records).
+COUNT=$(tr -cd '\0' < "$FILES" | wc -c | tr -d ' ')
+
+{
+    echo "===== $(date) ====="
+    echo "query:  $QUERY"
+    echo "matches: $COUNT"
+} >> "$LOG"
+
+if [ "$COUNT" -eq 0 ]; then
+    echo "No messages match: $QUERY"
+    echo "(no matches)" >> "$LOG"
+    exit 0
+fi
+
+# Per-list breakdown. Maildir paths for list mail look like
+#   /Users/cole/.mail/<account>/Lists/<leaf>/<cur|new>/<file>
+# so account is NF-4 and the list leaf is NF-2. Anything that doesn't
+# match that shape gets bucketed as "(other)" so weird matches still
+# show up in the count.
+echo "Per-list counts for: $QUERY"
+tr '\0' '\n' < "$FILES" \
+    | awk -F/ '
+        NF>=5 && $(NF-3)=="Lists" { print $(NF-4) "/" $(NF-2); next }
+        { print "(other)" }' \
+    | sort | uniq -c | sort -rn
+
+if [ "$APPLY" -ne 1 ]; then
+    echo
+    echo "Dry-run. Pass --apply to delete $COUNT message(s)."
+    echo "dry-run (no deletes)" >> "$LOG"
+    exit 0
+fi
+
+# ---------------------------------------------------------------------------
+# Delete + reindex. xargs -0 handles Maildir filenames (which contain
+# colons and commas) safely. rm -f keeps a missing file from aborting
+# the batch -- harmless if a sync raced and removed it first.
+# ---------------------------------------------------------------------------
+echo "Deleting $COUNT message(s)..."
+xargs -0 rm -f < "$FILES"
+echo "Re-indexing..."
+notmuch new >> "$LOG" 2>&1
+
+echo "deleted: $COUNT" >> "$LOG"
+echo "Done. Next mbsync run will propagate the removals to the server (Trash)."

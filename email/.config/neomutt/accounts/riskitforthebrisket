@@ -1,0 +1,21 @@
+# ~/.config/neomutt/accounts/riskitforthebrisket
+#
+# Loaded when entering a folder under riskitforthebrisket/.
+
+set from         = "cole@riskitforthebrisketbbq.com"
+set realname     = "Cole Kowalski"
+set sendmail     = "msmtp -a riskitforthebrisket"
+
+set spoolfile    = "+riskitforthebrisket/Inbox"
+set record       = "+riskitforthebrisket/Sent"
+set postponed    = "+riskitforthebrisket/Drafts"
+set trash        = "+riskitforthebrisket/Trash"
+
+# `date +%Y` is re-evaluated each time this is sourced, so the archive year
+# stays current without restarting neomutt.
+macro index,pager A \
+    "<save-message>=riskitforthebrisket/Archive/`date +%Y`/<enter>" \
+    "Archive to riskitforthebrisket/Archive/<year>"
+
+# Optional: per-account signature
+# set signature = "~/.config/neomutt/sig/riskitforthebrisket"

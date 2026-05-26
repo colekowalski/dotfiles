@@ -1,0 +1,48 @@
+# ~/.config/msmtp/config
+#
+# Outbound SMTP for two accounts. Authentication uses passwordeval against
+# the macOS Keychain. To store a password:
+#
+#   security add-internet-password \
+#       -s mail.northernbloc.org \
+#       -a cole@northernbloc.org \
+#       -r smtp -w
+#
+# (the trailing -w prompts; nothing lands in shell history)
+#
+# This file should be mode 0600 (chmod 600 ~/.config/msmtp/config). msmtp
+# only enforces that for literal `password` lines, but with passwordeval
+# the config still leaks usernames and host/keychain lookup patterns to
+# any local user — so tighten it as defense in depth.
+
+defaults
+auth                    on
+tls                     on
+tls_starttls            on
+tls_trust_file          system
+domain                  northernbloc.org
+set_from_header         auto
+set_date_header         auto
+add_missing_from_header on
+add_missing_date_header on
+remove_bcc_headers      on
+logfile                 ~/.cache/msmtp.log
+
+# --- northernbloc (primary) -------------------------------------------------
+account northernbloc
+host    mail.northernbloc.org
+port    587
+user    cole@northernbloc.org
+from    cole@northernbloc.org
+passwordeval "pass show email/northernbloc"
+
+# --- riskitforthebrisket ----------------------------------------------------
+account riskitforthebrisket
+host    mail.northernbloc.org
+port    587
+user    cole@riskitforthebrisketbbq.com
+from    cole@riskitforthebrisketbbq.com
+passwordeval "pass show email/riskitforthebrisket"
+
+# Default account when none is specified explicitly.
+account default : northernbloc

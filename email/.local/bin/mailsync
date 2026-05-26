@@ -1,0 +1,86 @@
+#!/bin/sh
+#
+# ~/bin/mailsync
+#
+# Portable wrapper that runs the mail sync pipeline:
+#   1. mbsync -a    (pull/push IMAP <-> ~/.mail)
+#   2. notmuch new  (re-index; the post-new hook applies tags)
+#
+# Locked via atomic mkdir to prevent overlapping invocations.
+# Logs to ~/.cache/mailsync.log.
+#
+# Tested portable to: macOS (Darwin), Linux (any modern distro),
+# FreeBSD, OpenBSD, NetBSD. POSIX sh, no bashisms, no flock.
+
+set -eu
+
+# ---------------------------------------------------------------------------
+# PATH: prepend known package-manager prefixes if they exist. Lets this
+# script find mbsync/notmuch in non-interactive contexts (LaunchAgent on
+# macOS, systemd timer on Linux, cron on BSDs).
+# ---------------------------------------------------------------------------
+for d in /opt/local/bin /opt/local/sbin \
+         /opt/homebrew/bin /opt/homebrew/sbin \
+         /usr/local/bin /usr/local/sbin \
+         /usr/pkg/bin /usr/pkg/sbin
+do
+    [ -d "$d" ] && PATH="$d:$PATH"
+done
+export PATH
+
+LOG="${MAILSYNC_LOG:-$HOME/.cache/mailsync.log}"
+LOCKDIR="${TMPDIR:-/tmp}/mailsync.lock.$(id -u)"
+
+mkdir -p "$(dirname "$LOG")"
+
+# ---------------------------------------------------------------------------
+# Lock acquisition via atomic mkdir.
+# ---------------------------------------------------------------------------
+# `mkdir` is atomic on POSIX filesystems: it succeeds for exactly one caller
+# when multiple invocations race on the same directory name. If it fails,
+# either another instance is genuinely running or a previous one died
+# without cleaning up — we check the stored PID to distinguish.
+# ---------------------------------------------------------------------------
+acquire_lock() {
+    if mkdir "$LOCKDIR" 2>/dev/null; then
+        echo $$ > "$LOCKDIR/pid"
+        return 0
+    fi
+    # Lock dir exists; see whether the holder is still alive.
+    if [ -r "$LOCKDIR/pid" ]; then
+        existing=$(cat "$LOCKDIR/pid" 2>/dev/null || true)
+        if [ -n "$existing" ] && kill -0 "$existing" 2>/dev/null; then
+            return 1   # genuine concurrent run
+        fi
+    fi
+    # Stale lock: clean and retry once.
+    rm -rf "$LOCKDIR"
+    mkdir "$LOCKDIR" 2>/dev/null || return 1
+    echo $$ > "$LOCKDIR/pid"
+    return 0
+}
+
+release_lock() {
+    rm -rf "$LOCKDIR"
+}
+
+if ! acquire_lock; then
+    echo "[$(date)] mailsync: another instance is running, skipping" >> "$LOG"
+    exit 0
+fi
+trap release_lock EXIT INT TERM HUP
+
+# ---------------------------------------------------------------------------
+# Sync pipeline. Output is captured to the log; the last line is echoed
+# to stdout so callers see a brief status.
+# ---------------------------------------------------------------------------
+{
+    echo "===== $(date) ====="
+    echo "--- mbsync ---"
+    mbsync -a
+    echo "--- notmuch new ---"
+    notmuch new
+    echo "--- done ---"
+} >> "$LOG" 2>&1
+
+tail -n 1 "$LOG"

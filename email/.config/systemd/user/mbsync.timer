@@ -1,0 +1,12 @@
+[Unit]
+Description=Run mbsync every 5 minutes
+Requires=mbsync.service
+
+[Timer]
+OnBootSec=2min
+OnUnitActiveSec=5min
+RandomizedDelaySec=30sec
+Persistent=true
+
+[Install]
+WantedBy=timers.target
